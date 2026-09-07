@@ -99,8 +99,9 @@ class StdioHandshakeTest(unittest.TestCase):
             if 1 in responses and 2 in responses:
                 break
 
-        proc.stdin.close()
         try:
+            # communicate() closes stdin itself. Closing it first here raises
+            # ValueError on 3.12, which 3.13 happens to tolerate.
             _, stderr = proc.communicate(timeout=30)
         except subprocess.TimeoutExpired:
             proc.kill()
