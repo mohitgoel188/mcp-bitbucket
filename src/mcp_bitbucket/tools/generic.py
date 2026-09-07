@@ -1,6 +1,7 @@
 """The generic escape hatch: endpoint discovery plus a raw API proxy."""
 
 import json
+import re
 from typing import Annotated, Any
 
 from mcp.server.mcpserver.exceptions import ToolError
@@ -9,6 +10,17 @@ from pydantic import Field
 from .. import annotations, config, endpoint_index
 from ..http_client import JSON_HEADERS, api_url, format_error, request
 from ..http_client import paginate as merge_pages
+
+# Deleting either of these destroys a whole container of work: a repository, or
+# a project and every repository inside it. bb_delete_repository is withheld
+# from the schema without BITBUCKET_ALLOW_DESTRUCTIVE, so letting the generic
+# proxy reach the same endpoints would make that gate decorative -- the model
+# would simply route around it. Matched after normalisation, so the "2.0/" and
+# absolute-URL spellings are covered too.
+_CONTAINER_DELETIONS = (
+    re.compile(r"^/repositories/[^/]+/[^/]+/?$"),
+    re.compile(r"^/workspaces/[^/]+/projects/[^/]+/?$"),
+)
 
 
 def normalize_api_path(path: str) -> str:
@@ -33,6 +45,11 @@ def normalize_api_path(path: str) -> str:
     candidate = candidate.lstrip("/")
     for prefix in ("2.0/", "api/2.0/"):
         candidate = candidate.removeprefix(prefix)
+
+    # A relative segment could otherwise resolve, server-side, to a path the
+    # guard rails below have already decided to refuse.
+    if any(segment in {"..", "."} for segment in candidate.split("/")):
+        raise ToolError(f"path must not contain relative segments: /{candidate}")
 
     if "{" in candidate or "}" in candidate:
         raise ToolError(
@@ -114,11 +131,16 @@ def register(server) -> None:
             "\nCall these with bb_request(method=..., path=..., query=..., body=...)."
         )
 
-    # Honest annotation for a tool whose blast radius is configuration-dependent:
-    # with the guard on it genuinely cannot write, so it advertises read-only.
     @server.tool(
+        # Honest annotation for a tool whose blast radius is configuration
+        # dependent: reads only with the guard on, and genuinely destructive
+        # once it is allowed to reach repository deletion.
         annotations=(
-            annotations.READ_ONLY if config.BB_REQUEST_READONLY else annotations.WRITE
+            annotations.READ_ONLY
+            if config.BB_REQUEST_READONLY
+            else annotations.DESTRUCTIVE
+            if config.ALLOW_DESTRUCTIVE
+            else annotations.WRITE
         ),
         description=(
             "Call ANY Bitbucket Cloud 2.0 REST endpoint directly. This is the escape hatch "
@@ -179,6 +201,18 @@ def register(server) -> None:
             )
 
         api_path = normalize_api_path(path)
+
+        if (
+            verb == "DELETE"
+            and not config.ALLOW_DESTRUCTIVE
+            and any(pattern.match(api_path) for pattern in _CONTAINER_DELETIONS)
+        ):
+            raise ToolError(
+                f"DELETE {api_path} would destroy a whole repository or project "
+                "and is refused (BITBUCKET_ALLOW_DESTRUCTIVE is not enabled).\n"
+                "Every other DELETE endpoint remains available."
+            )
+
         response = request(
             verb,
             api_url(api_path),

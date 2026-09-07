@@ -22,9 +22,10 @@ Derived from and substantially rewritten out of
   git remote of the directory the client was launched in, so one registration
   serves every Bitbucket checkout.
 - **Two auth modes.** Scoped API tokens (preferred) or legacy app passwords.
-- **Safe by default.** Writes through the generic proxy are opt-in, repository
-  deletion is not registered unless explicitly enabled, request logging is off,
-  and every tool is annotated so your client can tell a read from a deletion.
+- **Safe by default.** Writes through the generic proxy are opt-in, deleting a
+  repository or project is refused unless explicitly enabled — through the
+  proxy as well as the typed tool — request logging is off, and every tool is
+  annotated so your client can tell a read from a deletion.
 
 ---
 
@@ -213,7 +214,7 @@ running the server or its tests directly from a terminal.
 | `BITBUCKET_REPO_SLUG` | git remote | Repository to target. |
 | `BITBUCKET_PROJECT_DIR` | process cwd | Where to look for the git remote. |
 | `BITBUCKET_BB_REQUEST_READONLY` | `true` | Refuse non-`GET` through `bb_request`. |
-| `BITBUCKET_ALLOW_DESTRUCTIVE` | `false` | Register `bb_delete_repository`. |
+| `BITBUCKET_ALLOW_DESTRUCTIVE` | `false` | Permit repository and project deletion, via the typed tool or `bb_request`. |
 | `BITBUCKET_ENABLE_REQUEST_LOGGING` | `false` | Log requests as curl commands. |
 | `BITBUCKET_REQUEST_LOG_FILE` | `bitbucket_requests.log` | Where that log goes. |
 | `BITBUCKET_MAX_PAGINATED_PAGES` | `20` | Ceiling on pages followed when paginating. |
@@ -276,9 +277,22 @@ export BITBUCKET_BB_REQUEST_READONLY="false"
 export BITBUCKET_ALLOW_DESTRUCTIVE="true"
 ```
 
+The two switches interact, and it matters which way round:
+
+- `BITBUCKET_BB_REQUEST_READONLY` bounds `bb_request` to `GET`.
+- `BITBUCKET_ALLOW_DESTRUCTIVE` controls whether a repository or a project can
+  be deleted **at all** — it withholds `bb_delete_repository` from the schema
+  *and* makes `bb_request` refuse `DELETE` on those two endpoints. Enabling
+  writes therefore does not quietly re-open repository deletion through the
+  proxy.
+
+Every other `DELETE` — a comment, a webhook, a branch, a deploy key — is an
+ordinary write, governed by the read-only switch alone.
+
 The typed write tools (`bb_write_file`, `bb_pr_comment`, `bb_pr_approve`, …) are
-**not** affected by these switches — they are always available. The switches
-govern the generic proxy and repository deletion specifically.
+**not** affected by either switch; they are always available. `bb_delete_file`
+and `bb_delete_issue` are likewise always available — they are scoped
+deletions, not container deletions.
 
 ### Diagnostics and tuning
 
@@ -368,7 +382,7 @@ tells the model to confirm intent first, but that is guidance, not enforcement.
 | `bb_delete_file` | Delete a file. |
 | `bb_create_issue` | Create an issue with kind and priority. |
 | `bb_delete_issue` | Delete an issue. |
-| `bb_delete_repository` | Delete a repository. **Not registered unless `BITBUCKET_ALLOW_DESTRUCTIVE=true`.** |
+| `bb_delete_repository` | Delete a repository. **Not registered unless `BITBUCKET_ALLOW_DESTRUCTIVE=true`**, and `bb_request` refuses the same endpoint without it. |
 
 ---
 
@@ -439,6 +453,13 @@ at its default of `true` it refuses everything but `GET`. Turning it off grants
 the model any write your credential can perform, including endpoints no typed
 tool wraps.
 
+Two exceptions survive that: `DELETE` on a repository or a project is refused
+unless `BITBUCKET_ALLOW_DESTRUCTIVE` is also set. A guard rail expressed only at
+the tool layer is not a guard rail, because the proxy is the obvious way around
+it — so the flag binds both. Relative path segments are rejected for the same
+reason, since a `..` could otherwise resolve server-side to a path just
+refused.
+
 **Scope your credential.** The server enforces nothing about permissions — the
 token does. A read-scoped token is the strongest available guard rail.
 
@@ -479,6 +500,9 @@ python -m unittest tests.test_bb_api tests.test_auth_modes tests.test_stdio_hand
 uv run ruff check .
 uv run ruff format .
 ```
+
+`tests/test_guard_rails.py` is worth reading if you change either switch: it
+asserts the proxy cannot route around them.
 
 `tests/test_bb_integration.py` is excluded above deliberately: it hits the
 **real** Bitbucket API and creates and deletes real repositories. It skips

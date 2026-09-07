@@ -84,7 +84,14 @@ Defaults are deliberately restrictive because this ships publicly:
 - `BB_REQUEST_READONLY` defaults **true** — the generic proxy is reads-only.
 - `ALLOW_DESTRUCTIVE` defaults **false** — `bb_delete_repository` is not
   registered at all. Withholding it from the schema beats refusing at call time:
-  the model never sees the option.
+  the model never sees the option. **The same flag also gates `DELETE` on
+  `/repositories/{ws}/{slug}` and `/workspaces/{ws}/projects/{key}` inside
+  `bb_request`.** It originally did not, which made the gate decorative: with
+  writes enabled the model could delete a repository through the proxy while the
+  typed tool was withheld. A guard rail at the tool layer only is not a guard
+  rail — `bb_request` reaches all 294 endpoints and is the obvious way around
+  one. `normalize_api_path` also rejects `.`/`..` segments so a path cannot
+  resolve server-side to one just refused. Covered by `test_guard_rails.py`.
 - `ENABLE_REQUEST_LOGGING` defaults **false** — the log writes request bodies
   verbatim, which for `bb_write_file` means file contents.
 - **No fallback workspace.** Falling back to some hardcoded workspace means a

@@ -32,16 +32,12 @@ jobs:
       - name: Check formatting
         run: uv run ruff format --check .
 
-      # Only the offline suites. test_bb_integration.py hits the real Bitbucket
-      # API and creates real repositories; it skips itself without credentials
-      # and BITBUCKET_TEST_WORKSPACE, and must never be given them here.
+      # Discovery rather than a hand-listed set, so a new suite cannot be
+      # silently left unrun. test_bb_integration.py hits the real Bitbucket API
+      # and creates real repositories; it skips itself without credentials and
+      # BITBUCKET_TEST_WORKSPACE, and must never be given them here.
       - name: Test
-        run: |
-          uv run python -m unittest \
-            tests.test_bb_api \
-            tests.test_auth_modes \
-            tests.test_stdio_handshake \
-            --verbose
+        run: uv run python -m unittest discover tests --verbose
 
       - name: Build
         run: uv build
