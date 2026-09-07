@@ -108,7 +108,11 @@ def request(
     verb = method.upper()
     if verb == "GET":
         return requests.get(
-            url, auth=credentials, headers=headers, params=params, timeout=120
+            url,
+            auth=credentials,
+            headers=headers,
+            params=params,
+            timeout=config.REQUEST_TIMEOUT_SECONDS,
         )
     if verb == "POST":
         return requests.post(
@@ -119,7 +123,7 @@ def request(
             json=json_data,
             files=files,
             params=params,
-            timeout=120,
+            timeout=config.REQUEST_TIMEOUT_SECONDS,
         )
     if verb == "PUT":
         return requests.put(
@@ -128,7 +132,7 @@ def request(
             headers=headers,
             json=json_data,
             params=params,
-            timeout=120,
+            timeout=config.REQUEST_TIMEOUT_SECONDS,
         )
     if verb == "PATCH":
         return requests.patch(
@@ -137,7 +141,7 @@ def request(
             headers=headers,
             json=json_data,
             params=params,
-            timeout=120,
+            timeout=config.REQUEST_TIMEOUT_SECONDS,
         )
     if verb == "DELETE":
         return requests.delete(
@@ -146,7 +150,7 @@ def request(
             headers=headers,
             json=json_data,
             params=params,
-            timeout=120,
+            timeout=config.REQUEST_TIMEOUT_SECONDS,
         )
     raise ToolError(f"Unsupported HTTP method: {method}")
 

@@ -51,24 +51,19 @@ Register the server with your MCP client, pointing at the interpreter from the
 virtualenv you just created.
 
 > [!IMPORTANT]
+> **Your shell environment does not reach this server.** MCP clients start it as
+> a subprocess with a minimal environment, so `export BITBUCKET_TOKEN=...` in
+> your shell — or a `.env` file — has no effect. Every setting has to go in the
+> `env` block below. If it is not there, the server does not see it.
+>
 > **Do not launch this server with `uv run --directory`.** That flag changes the
 > process working directory to *this* repo, which breaks
 > [repository auto-detection](#repository-auto-detection) — every call would
 > resolve to `mcp-bitbucket` instead of the repo you are working in. Invoke the
 > interpreter directly, as shown below.
 
-### Claude Code
-
-```bash
-claude mcp add bitbucket \
-  --env BITBUCKET_TOKEN=your-api-token \
-  -- /absolute/path/to/mcp-bitbucket/.venv/bin/python -m mcp_bitbucket.server
-```
-
-### Claude Desktop
-
-`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS,
-`%APPDATA%\Claude\claude_desktop_config.json` on Windows:
+Only the credential is required. Everything else has a working default, so the
+shortest configuration that runs is:
 
 ```json
 {
@@ -84,15 +79,111 @@ claude mcp add bitbucket \
 }
 ```
 
+### Full configuration
+
+Every supported setting, with its default. Delete the lines you do not need —
+each one shown here is what you would get by omitting it, except the credential.
+
+```json
+{
+  "mcpServers": {
+    "bitbucket": {
+      "command": "/absolute/path/to/mcp-bitbucket/.venv/bin/python",
+      "args": ["-m", "mcp_bitbucket.server"],
+      "env": {
+        "BITBUCKET_TOKEN": "your-api-token",
+
+        "BITBUCKET_USERNAME": "",
+        "BITBUCKET_APP_PASSWORD": "",
+
+        "BITBUCKET_WORKSPACE": "",
+        "BITBUCKET_REPO_SLUG": "",
+        "BITBUCKET_PROJECT_DIR": "",
+
+        "BITBUCKET_BB_REQUEST_READONLY": "true",
+        "BITBUCKET_ALLOW_DESTRUCTIVE": "false",
+
+        "BITBUCKET_ENABLE_REQUEST_LOGGING": "false",
+        "BITBUCKET_REQUEST_LOG_FILE": "bitbucket_requests.log",
+
+        "BITBUCKET_MAX_PAGINATED_PAGES": "20",
+        "BITBUCKET_REQUEST_TIMEOUT_SECONDS": "120"
+      }
+    }
+  }
+}
+```
+
+Values are strings — JSON `true` is not accepted where a string is expected.
+Booleans take any of `true`/`1`/`yes`/`on` or `false`/`0`/`no`/`off`, in any
+case. An unrecognised value stops the server with a message naming the variable,
+rather than quietly falling back and leaving you to wonder why a switch did
+nothing.
+
+See [Environment Variables](#environment-variables) for what each one does.
+
+### Claude Desktop
+
+The file is
+`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS and
+`%APPDATA%\Claude\claude_desktop_config.json` on Windows. Use either block
+above verbatim.
+
 On Windows the `command` is
 `C:\\path\\to\\mcp-bitbucket\\.venv\\Scripts\\python.exe` — note that JSON
 requires each backslash to be doubled.
+
+### Claude Code
+
+`claude mcp add` takes each setting as a repeated `--env` flag:
+
+```bash
+claude mcp add bitbucket \
+  --env BITBUCKET_TOKEN=your-api-token \
+  --env BITBUCKET_WORKSPACE=your-workspace \
+  --env BITBUCKET_BB_REQUEST_READONLY=false \
+  -- /absolute/path/to/mcp-bitbucket/.venv/bin/python -m mcp_bitbucket.server
+```
+
+### Checking it worked
+
+```bash
+claude mcp list
+```
+
+If the server fails to start, the error says which variable is missing. A
+credential error that appears despite the variable being exported in your shell
+means it is not in the `env` block — see the warning above.
 
 ---
 
 ## Environment Variables
 
-Copy [`.env.example`](.env.example) as a starting point.
+Every setting, what it does, and its default. All of them belong in the `env`
+block of your [MCP client configuration](#configuration) — the `export` form
+below is only for running the server or its tests directly from a shell.
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `BITBUCKET_TOKEN` | — | Scoped API token. Preferred; wins over app-password mode. |
+| `BITBUCKET_USERNAME` | — | Legacy app-password mode. |
+| `BITBUCKET_APP_PASSWORD` | — | Legacy app-password mode. |
+| `BITBUCKET_WORKSPACE` | git remote | Workspace to target. |
+| `BITBUCKET_REPO_SLUG` | git remote | Repository to target. |
+| `BITBUCKET_PROJECT_DIR` | process cwd | Where to look for the git remote. |
+| `BITBUCKET_BB_REQUEST_READONLY` | `true` | Refuse non-`GET` through `bb_request`. |
+| `BITBUCKET_ALLOW_DESTRUCTIVE` | `false` | Register `bb_delete_repository`. |
+| `BITBUCKET_ENABLE_REQUEST_LOGGING` | `false` | Log requests as curl commands. |
+| `BITBUCKET_REQUEST_LOG_FILE` | `bitbucket_requests.log` | Where that log goes. |
+| `BITBUCKET_MAX_PAGINATED_PAGES` | `20` | Ceiling on pages followed when paginating. |
+| `BITBUCKET_REQUEST_TIMEOUT_SECONDS` | `120` | Per-request HTTP timeout. |
+| `BITBUCKET_TEST_WORKSPACE` | — | Live integration tests only. See [tests](tests/README.md). |
+
+Only a credential is required. Everything else falls back to the default above
+when unset or blank. A **present but unparseable** value is an error rather than
+a silent fallback — booleans accept `true`/`1`/`yes`/`on` and
+`false`/`0`/`no`/`off` in any case, and anything else stops the server with a
+message naming the variable.
 
 ### Credentials — one of these two is required
 
@@ -111,21 +202,27 @@ The server **refuses to start** with neither, naming what to provide.
 
 To create a token: Bitbucket → Settings → **API tokens** (or *App passwords* for
 the legacy mode). Grant only the scopes you need — `repository` and
-`pullrequest` cover most usage; add `:write` variants for the write tools.
+`pullrequest` cover most usage; add `:write` variants for the write tools. Your
+token's scopes are the real boundary; the server enforces nothing about
+permissions.
 
 ### Targeting
 
-```bash
-# Workspace. Optional inside a Bitbucket checkout (read from the git remote),
-# required otherwise. There is no built-in default.
-export BITBUCKET_WORKSPACE="your-workspace"
+Both are auto-detected from the `origin` remote of the working directory, so
+inside a Bitbucket checkout you can usually omit them entirely. Set them when
+the client is launched somewhere else, or to pin a fixed target.
 
-# Repo slug. Same rule — auto-detected inside a checkout.
+```bash
+export BITBUCKET_WORKSPACE="your-workspace"
 export BITBUCKET_REPO_SLUG="your-repo"
 
 # Point auto-detection at a directory other than the process cwd.
 export BITBUCKET_PROJECT_DIR="/path/to/some/checkout"
 ```
+
+There is no built-in default workspace. When nothing resolves, calls fail with
+an explicit message rather than an opaque 404 — see
+[auto-detection](#repository-auto-detection).
 
 ### Safety switches
 
@@ -142,7 +239,7 @@ The typed write tools (`bb_write_file`, `bb_pr_comment`, `bb_pr_approve`, …) a
 **not** affected by these switches — they are always available. The switches
 govern the generic proxy and repository deletion specifically.
 
-### Diagnostics
+### Diagnostics and tuning
 
 ```bash
 # Log every request as a runnable curl command. Default "false".
@@ -151,7 +248,18 @@ export BITBUCKET_ENABLE_REQUEST_LOGGING="true"
 
 # Where to write it. Default: ./bitbucket_requests.log, relative to the cwd.
 export BITBUCKET_REQUEST_LOG_FILE="/tmp/bitbucket_requests.log"
+
+# Raise for very large collections, lower to cap token cost. Default 20.
+export BITBUCKET_MAX_PAGINATED_PAGES="20"
+
+# Raise on a slow network, lower to fail fast. Default 120.
+export BITBUCKET_REQUEST_TIMEOUT_SECONDS="120"
 ```
+
+> [!NOTE]
+> [`.env.example`](.env.example) documents all of the above in one place, but
+> the server does **not** read `.env` files — MCP clients do not pass them
+> through. Treat it as a reference to copy values out of.
 
 ---
 

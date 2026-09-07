@@ -6,6 +6,47 @@ import subprocess
 
 API_BASE = "https://api.bitbucket.org/2.0"
 
+# Every setting below is optional except the credentials: absent means "use the
+# default". Values that are present but unparseable are a different matter and
+# raise, because silently falling back would leave someone convinced they had
+# enabled something they had not.
+
+_TRUTHY = frozenset({"1", "true", "yes", "y", "on"})
+_FALSEY = frozenset({"0", "false", "no", "n", "off"})
+
+
+def flag(name: str, default: bool) -> bool:
+    """Read a boolean setting, accepting the spellings people actually type.
+
+    A plain ``== "true"`` check silently treats ``1``, ``yes`` and ``on`` as
+    false, which is the worst possible outcome for a switch that gates writes:
+    the setting looks applied and is not.
+    """
+    raw = os.getenv(name)
+    if raw is None or not raw.strip():
+        return default
+    value = raw.strip().lower()
+    if value in _TRUTHY:
+        return True
+    if value in _FALSEY:
+        return False
+    raise ValueError(f"{name} must be one of {sorted(_TRUTHY | _FALSEY)}; got {raw!r}")
+
+
+def positive_int(name: str, default: int) -> int:
+    """Read a positive integer setting, falling back when it is unset."""
+    raw = os.getenv(name)
+    if raw is None or not raw.strip():
+        return default
+    try:
+        value = int(raw.strip())
+    except ValueError:
+        raise ValueError(f"{name} must be an integer; got {raw!r}") from None
+    if value < 1:
+        raise ValueError(f"{name} must be at least 1; got {value}")
+    return value
+
+
 BITBUCKET_USERNAME = os.getenv("BITBUCKET_USERNAME")
 BITBUCKET_APP_PASSWORD = os.getenv("BITBUCKET_APP_PASSWORD")
 BITBUCKET_TOKEN = os.getenv("BITBUCKET_TOKEN")
@@ -21,7 +62,11 @@ else:
     raise ValueError(
         "Missing Bitbucket credentials. Provide either:\n"
         "  1. BITBUCKET_TOKEN (scoped API token / repository access token), or\n"
-        "  2. BITBUCKET_USERNAME and BITBUCKET_APP_PASSWORD (legacy app password)"
+        "  2. BITBUCKET_USERNAME and BITBUCKET_APP_PASSWORD (legacy app password)\n"
+        "\n"
+        "MCP clients start this server with a minimal environment, so exporting "
+        "these in your shell is not enough -- they have to be set in the `env` "
+        "block of the server entry in your client's configuration."
     )
 
 USING_TOKEN_AUTH = AUTH_MODE == "token"
@@ -86,18 +131,18 @@ REQUEST_LOG_FILE = os.getenv("BITBUCKET_REQUEST_LOG_FILE", "bitbucket_requests.l
 # bb_write_file means file contents -- and because the server inherits the
 # client's project directory as its cwd, the file lands inside whatever repo the
 # session was opened in and grows unrotated. Opt in when debugging.
-ENABLE_REQUEST_LOGGING = (
-    os.getenv("BITBUCKET_ENABLE_REQUEST_LOGGING", "false").lower() == "true"
-)
+ENABLE_REQUEST_LOGGING = flag("BITBUCKET_ENABLE_REQUEST_LOGGING", False)
 
 # Guard rail for the generic proxy, on by default: bb_request can reach every
 # Bitbucket endpoint, so arbitrary writes are opt-in rather than opt-out.
-BB_REQUEST_READONLY = (
-    os.getenv("BITBUCKET_BB_REQUEST_READONLY", "true").lower() == "true"
-)
+BB_REQUEST_READONLY = flag("BITBUCKET_BB_REQUEST_READONLY", True)
 
 # bb_delete_repository is not registered at all unless this is set. Repository
 # deletion is irreversible and rarely what an agent should be able to reach for.
-ALLOW_DESTRUCTIVE = os.getenv("BITBUCKET_ALLOW_DESTRUCTIVE", "false").lower() == "true"
+ALLOW_DESTRUCTIVE = flag("BITBUCKET_ALLOW_DESTRUCTIVE", False)
 
-MAX_PAGINATED_PAGES = 20
+# Ceiling on pages followed when paginating, and the per-request HTTP timeout.
+# Both are generous defaults rather than hard limits, so a large workspace or a
+# slow network is a configuration change and not a code change.
+MAX_PAGINATED_PAGES = positive_int("BITBUCKET_MAX_PAGINATED_PAGES", 20)
+REQUEST_TIMEOUT_SECONDS = positive_int("BITBUCKET_REQUEST_TIMEOUT_SECONDS", 120)

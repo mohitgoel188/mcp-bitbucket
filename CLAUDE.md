@@ -51,6 +51,22 @@ or the operation is visible to other people. Otherwise: `bb_request`.
   entry) requires Python 3.12. That, plus `datetime.UTC` (3.11), sets the floor
   in `pyproject.toml`. Do not lower it without checking both.
 
+## Configuration reaches the server only through the client
+
+MCP clients start the server with a **minimal environment**. A shell `export`
+does not reach it, and there is no `.env` loading. Every setting has to be in
+the `env` block of the client's server entry. This is the single most common
+support question, so the credential error message says it explicitly, and
+`SettingsAreDocumentedTest` fails if a setting `config.py` reads is absent from
+the README table, the README config example, or `.env.example`.
+
+Settings are optional except the credentials: unset or blank falls back to the
+default. A value that is *present but unparseable* raises instead, because
+silently defaulting a switch like `ALLOW_DESTRUCTIVE` leaves someone convinced
+they enabled something they did not. `config.flag` accepts
+true/1/yes/y/on and false/0/no/n/off — a bare `== "true"` check read
+`ALLOW_DESTRUCTIVE=1` as false, which is the worst possible failure for a gate.
+
 ## Safety posture
 
 Defaults are deliberately restrictive because this ships publicly:

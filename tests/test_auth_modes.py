@@ -7,7 +7,9 @@ is present for every verb and every content type, regardless of mode.
 """
 
 import importlib
+import json
 import os
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -83,6 +85,116 @@ class AuthModeTest(unittest.TestCase):
             )
             sent = mock.call_args.kwargs["headers"]
             self.assertEqual(sent.get("Authorization"), "Bearer tok-example-not-real")
+
+
+class SettingParsingTest(unittest.TestCase):
+    """Optional settings fall back to defaults; bad values are not guessed at.
+
+    A plain `== "true"` check used to read BITBUCKET_ALLOW_DESTRUCTIVE=1 as
+    false, so the switch looked applied while writes stayed blocked. These
+    assert every spelling people actually type.
+    """
+
+    def _config(self, env: dict[str, str]):
+        return _reload({**TOKEN_ENV, **env})[0]
+
+    def test_truthy_spellings(self) -> None:
+        for value in ("1", "true", "True", "TRUE", "yes", "y", "on", " on "):
+            with self.subTest(value=value):
+                config = self._config({"BITBUCKET_ALLOW_DESTRUCTIVE": value})
+                self.assertTrue(config.ALLOW_DESTRUCTIVE, f"{value!r} read as false")
+
+    def test_falsey_spellings(self) -> None:
+        for value in ("0", "false", "False", "no", "n", "off"):
+            with self.subTest(value=value):
+                config = self._config({"BITBUCKET_BB_REQUEST_READONLY": value})
+                self.assertFalse(config.BB_REQUEST_READONLY, f"{value!r} read as true")
+
+    def test_unset_and_blank_fall_back_to_defaults(self) -> None:
+        for env in ({}, {"BITBUCKET_ALLOW_DESTRUCTIVE": "   "}):
+            with self.subTest(env=env):
+                config = self._config(env)
+                self.assertFalse(config.ALLOW_DESTRUCTIVE)
+                self.assertTrue(config.BB_REQUEST_READONLY)
+                self.assertFalse(config.ENABLE_REQUEST_LOGGING)
+                self.assertEqual(config.MAX_PAGINATED_PAGES, 20)
+                self.assertEqual(config.REQUEST_TIMEOUT_SECONDS, 120)
+
+    def test_unparseable_flag_raises_rather_than_defaulting(self) -> None:
+        with self.assertRaises(ValueError):
+            self._config({"BITBUCKET_ALLOW_DESTRUCTIVE": "maybe"})
+
+    def test_integer_settings_are_read_and_validated(self) -> None:
+        config = self._config(
+            {
+                "BITBUCKET_MAX_PAGINATED_PAGES": "5",
+                "BITBUCKET_REQUEST_TIMEOUT_SECONDS": "30",
+            }
+        )
+        self.assertEqual(config.MAX_PAGINATED_PAGES, 5)
+        self.assertEqual(config.REQUEST_TIMEOUT_SECONDS, 30)
+        for bad in ("nope", "0", "-1"):
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                self._config({"BITBUCKET_MAX_PAGINATED_PAGES": bad})
+
+    def test_timeout_setting_reaches_the_request(self) -> None:
+        _, http = _reload({**TOKEN_ENV, "BITBUCKET_REQUEST_TIMEOUT_SECONDS": "7"})
+        with patch("requests.get") as mock:
+            http.request("GET", "https://api.bitbucket.org/2.0/user")
+            self.assertEqual(mock.call_args.kwargs["timeout"], 7)
+
+
+class SettingsAreDocumentedTest(unittest.TestCase):
+    """Every setting the code reads must be documented and configurable.
+
+    The README's client-configuration block is the only place a setting can
+    actually be set -- MCP clients start the server with a minimal environment,
+    so a variable missing from that block is unreachable no matter what the
+    user exports. This test is what keeps the two from drifting.
+    """
+
+    REPO_ROOT = Path(__file__).resolve().parent.parent
+
+    def _vars_read_by_config(self) -> set[str]:
+        source = (self.REPO_ROOT / "src" / "mcp_bitbucket" / "config.py").read_text()
+        return set(re.findall(r'"(BITBUCKET_[A-Z_]+)"', source))
+
+    def test_every_setting_is_in_the_readme_table(self) -> None:
+        readme = (self.REPO_ROOT / "README.md").read_text()
+        # assertIn would dump the whole README into the failure message.
+        undocumented = [
+            name
+            for name in sorted(self._vars_read_by_config())
+            if f"`{name}`" not in readme
+        ]
+        self.assertEqual(undocumented, [], "settings missing from the README")
+
+    def test_every_setting_is_in_the_full_config_example(self) -> None:
+        readme = (self.REPO_ROOT / "README.md").read_text()
+        blocks = [
+            json.loads(block)
+            for block in re.findall(r"```json\n(.*?)```", readme, re.S)
+        ]
+        configured: set[str] = set()
+        for block in blocks:
+            for entry in block.get("mcpServers", {}).values():
+                configured |= set(entry.get("env", {}))
+        # Test-only settings have no place in a user's client configuration.
+        expected = self._vars_read_by_config() - {"BITBUCKET_TEST_WORKSPACE"}
+        self.assertEqual(
+            expected - configured,
+            set(),
+            "settings the code reads but no config example passes",
+        )
+
+    def test_every_setting_is_in_env_example(self) -> None:
+        env_example = (self.REPO_ROOT / ".env.example").read_text()
+        missing = [
+            name
+            for name in sorted(self._vars_read_by_config())
+            if name not in env_example
+        ]
+        self.assertEqual(missing, [], "settings missing from .env.example")
 
 
 class LogRedactionTest(unittest.TestCase):
