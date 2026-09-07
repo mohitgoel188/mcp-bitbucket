@@ -144,6 +144,34 @@ class SettingParsingTest(unittest.TestCase):
             self.assertEqual(mock.call_args.kwargs["timeout"], 7)
 
 
+class UnexpandedPlaceholderTest(unittest.TestCase):
+    """A client that does not expand ${VAR} passes the text through verbatim.
+
+    Sent as a bearer token that comes back as a bare 401, which tells the user
+    nothing. These assert the failure names the real cause instead.
+    """
+
+    def test_credential_placeholder_raises_with_an_explanation(self) -> None:
+        with self.assertRaises(ValueError) as caught:
+            _reload({"BITBUCKET_TOKEN": "${BITBUCKET_TOKEN}"})
+        message = str(caught.exception)
+        self.assertIn("BITBUCKET_TOKEN", message)
+        self.assertIn("did not expand", message)
+
+    def test_targeting_placeholder_raises(self) -> None:
+        with self.assertRaises(ValueError):
+            _reload({**TOKEN_ENV, "BITBUCKET_WORKSPACE": "${MY_WORKSPACE}"})
+
+    def test_default_form_is_also_caught(self) -> None:
+        with self.assertRaises(ValueError):
+            _reload({**TOKEN_ENV, "BITBUCKET_WORKSPACE": "${MY_WORKSPACE:-fallback}"})
+
+    def test_a_real_value_containing_a_dollar_is_accepted(self) -> None:
+        """Only the ${...} form is a placeholder; a bare $ is legitimate."""
+        config, _ = _reload({"BITBUCKET_TOKEN": "tok$with$dollars"})
+        self.assertEqual(config.BITBUCKET_TOKEN, "tok$with$dollars")
+
+
 class SettingsAreDocumentedTest(unittest.TestCase):
     """Every setting the code reads must be documented and configurable.
 

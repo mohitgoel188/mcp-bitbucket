@@ -60,6 +60,16 @@ support question, so the credential error message says it explicitly, and
 `SettingsAreDocumentedTest` fails if a setting `config.py` reads is absent from
 the README table, the README config example, or `.env.example`.
 
+Both Claude Code and Claude Desktop expand `${VAR}` and `${VAR:-default}` in the
+`env` block, reading the environment of whatever launched the client -- so a GUI
+launch does not see `~/.zshrc`. Expansion works in `.mcp.json`, `~/.claude.json`
+and `claude_desktop_config.json`, but **not** in `settings.json`, whose `env`
+block is ignored for MCP servers. When a variable is unset with no default, the
+client passes the literal `${VAR}` text through; `config.text` rejects that with
+the likely causes, because sending it as a bearer token yields an unexplained
+401. This is why the README recommends `${VAR}` for the credential: a committed
+`.mcp.json` then holds no secret.
+
 Settings are optional except the credentials: unset or blank falls back to the
 default. A value that is *present but unparseable* raises instead, because
 silently defaulting a switch like `ALLOW_DESTRUCTIVE` leaves someone convinced

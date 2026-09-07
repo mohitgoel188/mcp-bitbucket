@@ -51,19 +51,22 @@ Register the server with your MCP client, pointing at the interpreter from the
 virtualenv you just created.
 
 > [!IMPORTANT]
-> **Your shell environment does not reach this server.** MCP clients start it as
-> a subprocess with a minimal environment, so `export BITBUCKET_TOKEN=...` in
-> your shell — or a `.env` file — has no effect. Every setting has to go in the
-> `env` block below. If it is not there, the server does not see it.
+> **Your shell environment does not reach this server directly.** MCP clients
+> start it as a subprocess with a minimal environment, and there is no `.env`
+> loading. Every setting has to appear in the `env` block — either as a literal
+> value or as a `${VAR}` reference, described below.
 >
 > **Do not launch this server with `uv run --directory`.** That flag changes the
 > process working directory to *this* repo, which breaks
 > [repository auto-detection](#repository-auto-detection) — every call would
 > resolve to `mcp-bitbucket` instead of the repo you are working in. Invoke the
-> interpreter directly, as shown below.
+> interpreter directly.
 
-Only the credential is required. Everything else has a working default, so the
-shortest configuration that runs is:
+### Recommended: reference your environment, do not paste the token
+
+Claude Code and Claude Desktop both expand `${VAR}` and `${VAR:-default}` inside
+the `env` block. Referencing your token rather than pasting it keeps the
+credential out of the config file entirely:
 
 ```json
 {
@@ -72,17 +75,51 @@ shortest configuration that runs is:
       "command": "/absolute/path/to/mcp-bitbucket/.venv/bin/python",
       "args": ["-m", "mcp_bitbucket.server"],
       "env": {
-        "BITBUCKET_TOKEN": "your-api-token"
+        "BITBUCKET_TOKEN": "${BITBUCKET_TOKEN}"
       }
     }
   }
 }
 ```
 
+> [!TIP]
+> **Why this is the safer form.** The token never appears in the file, so the
+> config can be committed to a repo, shared with a teammate, screenshotted in a
+> bug report, or synced between machines without leaking anything. That matters
+> most for a project-scoped `.mcp.json`, which normally *is* checked in. The
+> secret stays in your shell profile or your OS keychain, where a `chmod 600`
+> and your existing backup policy already apply to it.
+>
+> **Pasting the literal value is also fine** if you would rather not manage
+> shell variables — the server cannot tell the difference. Just keep the file
+> out of version control, since anything in it is readable by every process
+> running as you.
+
+Then set the variable where your client will see it:
+
+```bash
+# ~/.zshrc, ~/.bashrc, or wherever your login shell reads
+export BITBUCKET_TOKEN="your-api-token"
+```
+
+Expansion reads the environment of the process that **launched the client**, not
+your current terminal. Claude Code started from a shell inherits it. A GUI
+launch of Claude Desktop does not read `~/.zshrc` at all — set the variable at
+the OS level (`launchctl setenv BITBUCKET_TOKEN ...` on macOS, System
+Environment Variables on Windows), start the app from a terminal, or just use a
+literal value in that file.
+
+If a variable is unset and has no `:-default`, the client passes the literal
+text `${BITBUCKET_TOKEN}` through. The server detects that and tells you which
+of the likely causes applies rather than sending it as a token and surfacing an
+unexplained 401. `claude mcp list` also flags missing variables.
+
 ### Full configuration
 
-Every supported setting, with its default. Delete the lines you do not need —
-each one shown here is what you would get by omitting it, except the credential.
+Every supported setting. Only the credential is required — each value shown here
+is the default you get by omitting the line. Non-secret settings are written
+literally because there is nothing to hide; use `${VAR:-default}` for any you
+want to vary per machine.
 
 ```json
 {
@@ -91,12 +128,12 @@ each one shown here is what you would get by omitting it, except the credential.
       "command": "/absolute/path/to/mcp-bitbucket/.venv/bin/python",
       "args": ["-m", "mcp_bitbucket.server"],
       "env": {
-        "BITBUCKET_TOKEN": "your-api-token",
+        "BITBUCKET_TOKEN": "${BITBUCKET_TOKEN}",
 
-        "BITBUCKET_USERNAME": "",
-        "BITBUCKET_APP_PASSWORD": "",
+        "BITBUCKET_USERNAME": "${BITBUCKET_USERNAME:-}",
+        "BITBUCKET_APP_PASSWORD": "${BITBUCKET_APP_PASSWORD:-}",
 
-        "BITBUCKET_WORKSPACE": "",
+        "BITBUCKET_WORKSPACE": "${BITBUCKET_WORKSPACE:-}",
         "BITBUCKET_REPO_SLUG": "",
         "BITBUCKET_PROJECT_DIR": "",
 
@@ -115,35 +152,36 @@ each one shown here is what you would get by omitting it, except the credential.
 ```
 
 Values are strings — JSON `true` is not accepted where a string is expected.
-Booleans take any of `true`/`1`/`yes`/`on` or `false`/`0`/`no`/`off`, in any
-case. An unrecognised value stops the server with a message naming the variable,
-rather than quietly falling back and leaving you to wonder why a switch did
-nothing.
+Booleans take `true`/`1`/`yes`/`on` or `false`/`0`/`no`/`off`, in any case. An
+unrecognised value stops the server with a message naming the variable, rather
+than quietly falling back and leaving you to wonder why a switch did nothing.
 
-See [Environment Variables](#environment-variables) for what each one does.
+### Where the config file lives
 
-### Claude Desktop
-
-The file is
-`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS and
-`%APPDATA%\Claude\claude_desktop_config.json` on Windows. Use either block
-above verbatim.
+| Client | File | Expands `${VAR}` |
+|---|---|---|
+| Claude Code, project scope | `.mcp.json` at the repo root | yes |
+| Claude Code, user scope | `~/.claude.json` | yes |
+| Claude Desktop | `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS), `%APPDATA%\Claude\claude_desktop_config.json` (Windows) | yes |
+| — | `settings.json` / `.claude/settings.json` | **no — its `env` block is ignored for MCP servers** |
 
 On Windows the `command` is
-`C:\\path\\to\\mcp-bitbucket\\.venv\\Scripts\\python.exe` — note that JSON
-requires each backslash to be doubled.
+`C:\\path\\to\\mcp-bitbucket\\.venv\\Scripts\\python.exe` — JSON requires each
+backslash to be doubled.
 
-### Claude Code
-
-`claude mcp add` takes each setting as a repeated `--env` flag:
+### Claude Code CLI
 
 ```bash
 claude mcp add bitbucket \
-  --env BITBUCKET_TOKEN=your-api-token \
+  --env BITBUCKET_TOKEN='${BITBUCKET_TOKEN}' \
   --env BITBUCKET_WORKSPACE=your-workspace \
-  --env BITBUCKET_BB_REQUEST_READONLY=false \
   -- /absolute/path/to/mcp-bitbucket/.venv/bin/python -m mcp_bitbucket.server
 ```
+
+Note the single quotes, which stop your shell expanding `${BITBUCKET_TOKEN}`
+before the CLI sees it. Check the written file afterwards and confirm it still
+contains the `${...}` reference rather than your resolved token — if it was
+resolved, edit the file by hand.
 
 ### Checking it worked
 
@@ -151,17 +189,20 @@ claude mcp add bitbucket \
 claude mcp list
 ```
 
-If the server fails to start, the error says which variable is missing. A
-credential error that appears despite the variable being exported in your shell
-means it is not in the `env` block — see the warning above.
+A credential error that appears even though the variable is exported in your
+shell means the value is not reaching the server — check the table above for
+whether that file expands variables, and whether the client was launched from an
+environment that has the variable set.
 
 ---
 
 ## Environment Variables
 
 Every setting, what it does, and its default. All of them belong in the `env`
-block of your [MCP client configuration](#configuration) — the `export` form
-below is only for running the server or its tests directly from a shell.
+block of your [MCP client configuration](#configuration), either literally or as
+a `${VAR}` reference. The `export` form shown in each subsection is what you put
+in your shell profile for `${VAR}` to resolve against — or what you use when
+running the server or its tests directly from a terminal.
 
 | Variable | Default | Purpose |
 |---|---|---|
@@ -257,9 +298,10 @@ export BITBUCKET_REQUEST_TIMEOUT_SECONDS="120"
 ```
 
 > [!NOTE]
-> [`.env.example`](.env.example) documents all of the above in one place, but
-> the server does **not** read `.env` files — MCP clients do not pass them
-> through. Treat it as a reference to copy values out of.
+> [`.env.example`](.env.example) lists all of the above in one place, but the
+> server does **not** read `.env` files, and neither client loads one for
+> `${VAR}` expansion. Treat it as a reference: copy the values into your shell
+> profile, or into the `env` block directly.
 
 ---
 
@@ -399,6 +441,13 @@ tool wraps.
 
 **Scope your credential.** The server enforces nothing about permissions — the
 token does. A read-scoped token is the strongest available guard rail.
+
+**Keep the token out of the config file.** Both clients expand `${VAR}` in the
+`env` block, so the credential can live in your shell profile or OS keychain
+instead of in a file that gets committed, synced or pasted into a bug report.
+See [Configuration](#recommended-reference-your-environment-do-not-paste-the-token).
+The server rejects an unexpanded `${...}` placeholder rather than sending it as
+a token, so a misconfiguration fails with an explanation instead of a bare 401.
 
 **Request logging writes bodies to disk.** When
 `BITBUCKET_ENABLE_REQUEST_LOGGING` is on, each request is appended as a runnable

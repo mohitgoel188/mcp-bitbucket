@@ -15,6 +15,34 @@ _TRUTHY = frozenset({"1", "true", "yes", "y", "on"})
 _FALSEY = frozenset({"0", "false", "no", "n", "off"})
 
 
+# An MCP client that supports ${VAR} expansion substitutes the real value
+# before launching us. One that does not passes the text through verbatim, and
+# a literal "${BITBUCKET_TOKEN}" sent as a bearer token comes back as an
+# uninformative 401. Catching it here names the actual problem.
+_UNEXPANDED = re.compile(r"\$\{[^}]*\}")
+
+
+def text(name: str, default: str = "") -> str:
+    """Read a string setting, rejecting an unexpanded ``${VAR}`` placeholder."""
+    raw = os.getenv(name)
+    if raw is None or not raw.strip():
+        return default
+    value = raw.strip()
+    if _UNEXPANDED.search(value):
+        raise ValueError(
+            f"{name} is still the literal text {value!r}, so your MCP client "
+            "did not expand it. Usually one of:\n"
+            f"  1. {value} is not set in the environment the client was "
+            "launched from (a GUI app does not inherit your terminal's shell), or\n"
+            "  2. the server is configured in settings.json, whose env block is "
+            "ignored for MCP servers -- use .mcp.json or the client's own config, or\n"
+            "  3. a typo in the variable name.\n"
+            "Set a fallback with ${NAME:-value}, or put the literal value in the "
+            "`env` block instead."
+        )
+    return value
+
+
 def flag(name: str, default: bool) -> bool:
     """Read a boolean setting, accepting the spellings people actually type.
 
@@ -47,9 +75,9 @@ def positive_int(name: str, default: int) -> int:
     return value
 
 
-BITBUCKET_USERNAME = os.getenv("BITBUCKET_USERNAME")
-BITBUCKET_APP_PASSWORD = os.getenv("BITBUCKET_APP_PASSWORD")
-BITBUCKET_TOKEN = os.getenv("BITBUCKET_TOKEN")
+BITBUCKET_USERNAME = text("BITBUCKET_USERNAME") or None
+BITBUCKET_APP_PASSWORD = text("BITBUCKET_APP_PASSWORD") or None
+BITBUCKET_TOKEN = text("BITBUCKET_TOKEN") or None
 
 # Atlassian is migrating Bitbucket Cloud off app passwords onto scoped API
 # tokens, so a token wins when both are configured. Basic auth stays supported
@@ -91,7 +119,7 @@ def detect_repo(project_dir: str | None = None) -> tuple[str | None, str | None]
     changes cwd to the server's own repo and detection would find this project
     instead of the user's.
     """
-    root = project_dir or os.getenv("BITBUCKET_PROJECT_DIR") or os.getcwd()
+    root = project_dir or text("BITBUCKET_PROJECT_DIR") or os.getcwd()
     try:
         result = subprocess.run(
             ["git", "-C", root, "remote", "get-url", "origin"],
@@ -119,13 +147,13 @@ DETECTED_WORKSPACE, DETECTED_REPO_SLUG = detect_repo()
 # other organisation's workspace is worse than one that asks to be configured.
 # Empty is handled the same way as an empty repo slug -- http_client.api_url
 # turns it into a readable error rather than an opaque 404.
-DEFAULT_WORKSPACE = os.getenv("BITBUCKET_WORKSPACE") or DETECTED_WORKSPACE or ""
+DEFAULT_WORKSPACE = text("BITBUCKET_WORKSPACE") or DETECTED_WORKSPACE or ""
 
 # Empty when the cwd is not a Bitbucket checkout; tools then require repo_slug
 # explicitly, and http_client.api_url raises a readable error if it is missing.
-DEFAULT_REPO_SLUG = os.getenv("BITBUCKET_REPO_SLUG") or DETECTED_REPO_SLUG or ""
+DEFAULT_REPO_SLUG = text("BITBUCKET_REPO_SLUG") or DETECTED_REPO_SLUG or ""
 
-REQUEST_LOG_FILE = os.getenv("BITBUCKET_REQUEST_LOG_FILE", "bitbucket_requests.log")
+REQUEST_LOG_FILE = text("BITBUCKET_REQUEST_LOG_FILE", "bitbucket_requests.log")
 
 # Off by default. The log records request bodies verbatim -- which for
 # bb_write_file means file contents -- and because the server inherits the
