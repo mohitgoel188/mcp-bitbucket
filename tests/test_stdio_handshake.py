@@ -9,6 +9,7 @@ with a bare JSON-RPC -32000. This test spawns the server the way a client does.
 import json
 import subprocess
 import sys
+import time
 import unittest
 from pathlib import Path
 
@@ -28,56 +29,93 @@ def _rpc(payload: dict) -> str:
 class StdioHandshakeTest(unittest.TestCase):
     """Drive a real subprocess over stdio, as an MCP client would."""
 
-    def setUp(self) -> None:
-        self.env = {
-            "PATH": "/usr/bin:/bin:/usr/local/bin",
-            "HOME": str(Path.home()),
-            # Credentials only need to be present; the handshake makes no API call.
-            "BITBUCKET_USERNAME": "test-user",
-            "BITBUCKET_APP_PASSWORD": "test-password",
-            "BITBUCKET_ENABLE_REQUEST_LOGGING": "false",
-        }
+    # The handshake is run once and shared. Each test used to spawn its own
+    # server, which was both slow and the source of a race: writing every
+    # message and immediately closing stdin let the server see EOF and shut
+    # down before it had dispatched tools/list. A fast machine always won that
+    # race; a cold CI runner lost it. The reader below waits for the responses
+    # instead of assuming they arrived.
+    _result: tuple[dict[int, dict], str] | None = None
 
-    def _handshake(self) -> dict[int, dict]:
-        stdin = "".join(
-            [
-                _rpc(
-                    {
-                        "jsonrpc": "2.0",
-                        "id": 1,
-                        "method": "initialize",
-                        "params": {
-                            "protocolVersion": "2025-06-18",
-                            "capabilities": {},
-                            "clientInfo": {"name": "test", "version": "1"},
-                        },
-                    }
-                ),
-                _rpc({"jsonrpc": "2.0", "method": "notifications/initialized"}),
-                _rpc({"jsonrpc": "2.0", "id": 2, "method": "tools/list"}),
-            ]
-        )
+    ENV = {
+        "PATH": "/usr/bin:/bin:/usr/local/bin",
+        "HOME": str(Path.home()),
+        # Credentials only need to be present; the handshake makes no API call.
+        "BITBUCKET_USERNAME": "test-user",
+        "BITBUCKET_APP_PASSWORD": "test-password",
+        "BITBUCKET_ENABLE_REQUEST_LOGGING": "false",
+        "PYTHONPATH": str(REPO_ROOT / "src"),
+    }
 
-        proc = subprocess.run(
+    @classmethod
+    def _run(cls) -> tuple[dict[int, dict], str]:
+        """Spawn the server, complete the handshake, return responses + stderr."""
+        proc = subprocess.Popen(
             [sys.executable, "-m", "mcp_bitbucket.server"],
-            input=stdin,
-            capture_output=True,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
             text=True,
-            timeout=60,
             cwd=REPO_ROOT,
-            env={**self.env, "PYTHONPATH": str(REPO_ROOT / "src")},
-            check=False,
+            env=cls.ENV,
         )
+        assert proc.stdin and proc.stdout
+        proc.stdin.write(
+            "".join(
+                [
+                    _rpc(
+                        {
+                            "jsonrpc": "2.0",
+                            "id": 1,
+                            "method": "initialize",
+                            "params": {
+                                "protocolVersion": "2025-06-18",
+                                "capabilities": {},
+                                "clientInfo": {"name": "test", "version": "1"},
+                            },
+                        }
+                    ),
+                    _rpc({"jsonrpc": "2.0", "method": "notifications/initialized"}),
+                    _rpc({"jsonrpc": "2.0", "id": 2, "method": "tools/list"}),
+                ]
+            )
+        )
+        proc.stdin.flush()
 
         responses: dict[int, dict] = {}
-        for line in proc.stdout.splitlines():
+        deadline = time.monotonic() + 120
+        while time.monotonic() < deadline:
+            line = proc.stdout.readline()
+            if not line:  # the server exited or died
+                break
             line = line.strip()
             if not line:
                 continue
-            message = json.loads(line)  # non-JSON on stdout would corrupt the transport
+            # Non-JSON on stdout would corrupt the transport, so parsing every
+            # line is itself the assertion.
+            message = json.loads(line)
             if message.get("id") is not None:
                 responses[message["id"]] = message
-        self.stderr = proc.stderr
+            if 1 in responses and 2 in responses:
+                break
+
+        proc.stdin.close()
+        try:
+            _, stderr = proc.communicate(timeout=30)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            _, stderr = proc.communicate()
+        return responses, stderr
+
+    @classmethod
+    def _handshake_result(cls) -> tuple[dict[int, dict], str]:
+        if cls._result is None:
+            cls._result = cls._run()
+        return cls._result
+
+    def _handshake(self) -> dict[int, dict]:
+        responses, self.stderr = self._handshake_result()
+        self.assertIn(2, responses, f"no tools/list response; stderr:\n{self.stderr}")
         return responses
 
     def test_initialize_returns_server_info_and_instructions(self) -> None:
@@ -92,7 +130,6 @@ class StdioHandshakeTest(unittest.TestCase):
 
     def test_tools_list_exposes_every_tool(self) -> None:
         responses = self._handshake()
-        self.assertIn(2, responses, f"no tools/list response; stderr:\n{self.stderr}")
         names = {tool["name"] for tool in responses[2]["result"]["tools"]}
         self.assertGreaterEqual(len(names), MINIMUM_TOOL_COUNT)
         for required in (
