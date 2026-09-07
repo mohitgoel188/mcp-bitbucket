@@ -1,0 +1,33 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+.spec-cache/
+
+# IDE / editor
+.idea/
+.vscode/
+
+# Agent & analysis tooling
+.serena/
+.code-review-graph/
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+
+# Request logs (may contain request bodies when logging is enabled)
+*.log
+
+# Credentials
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store

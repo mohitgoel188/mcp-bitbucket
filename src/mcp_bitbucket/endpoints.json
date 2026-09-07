@@ -1,0 +1,4905 @@
+{
+ "source": "Bitbucket API",
+ "spec_version": "3.0.0",
+ "api_version": "2.0",
+ "base_url": "https://api.bitbucket.org/2.0",
+ "docs": "https://developer.atlassian.com/cloud/bitbucket/rest/intro/",
+ "operation_count": 294,
+ "tags": [
+  "Addon",
+  "Branch restrictions",
+  "Branching model",
+  "Commit statuses",
+  "Commits",
+  "Deployments",
+  "Downloads",
+  "GPG",
+  "Pipelines",
+  "Projects",
+  "Pullrequests",
+  "Refs",
+  "Reports",
+  "Repositories",
+  "SSH",
+  "Search",
+  "Snippets",
+  "Source",
+  "Users",
+  "Webhooks",
+  "Workspaces",
+  "properties"
+ ],
+ "operations": [
+  {
+   "id": "deleteAnApp",
+   "method": "DELETE",
+   "path": "/addon",
+   "tag": "Addon",
+   "summary": "Delete an app",
+   "path_params": [],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-addon/#api-addon-delete"
+  },
+  {
+   "id": "updateAnInstalledApp",
+   "method": "PUT",
+   "path": "/addon",
+   "tag": "Addon",
+   "summary": "Update an installed app",
+   "path_params": [],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-addon/#api-addon-put"
+  },
+  {
+   "id": "getTheClientKeyOfAConnectAddon",
+   "method": "GET",
+   "path": "/addon/{addon_key}/client-key",
+   "tag": "Addon",
+   "summary": "Get the client key of a Connect addon",
+   "path_params": [
+    "addon_key"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-addon/#api-addon-addon-key-client-key-get"
+  },
+  {
+   "id": "listBranchRestrictions",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/branch-restrictions",
+   "tag": "Branch restrictions",
+   "summary": "List branch restrictions",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "kind",
+     "type": "string",
+     "required": false,
+     "description": "Branch restrictions of this type"
+    },
+    {
+     "name": "pattern",
+     "type": "string",
+     "required": false,
+     "description": "Branch restrictions applied to branches of this pattern"
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-branch-restrictions/#api-repositories-workspace-repo-slug-branch-restrictions-get"
+  },
+  {
+   "id": "createABranchRestrictionRule",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/branch-restrictions",
+   "tag": "Branch restrictions",
+   "summary": "Create a branch restriction rule",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-branch-restrictions/#api-repositories-workspace-repo-slug-branch-restrictions-post"
+  },
+  {
+   "id": "deleteABranchRestrictionRule",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/branch-restrictions/{id}",
+   "tag": "Branch restrictions",
+   "summary": "Delete a branch restriction rule",
+   "path_params": [
+    "id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-branch-restrictions/#api-repositories-workspace-repo-slug-branch-restrictions-id-delete"
+  },
+  {
+   "id": "getABranchRestrictionRule",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/branch-restrictions/{id}",
+   "tag": "Branch restrictions",
+   "summary": "Get a branch restriction rule",
+   "path_params": [
+    "id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-branch-restrictions/#api-repositories-workspace-repo-slug-branch-restrictions-id-get"
+  },
+  {
+   "id": "updateABranchRestrictionRule",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/branch-restrictions/{id}",
+   "tag": "Branch restrictions",
+   "summary": "Update a branch restriction rule",
+   "path_params": [
+    "id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-branch-restrictions/#api-repositories-workspace-repo-slug-branch-restrictions-id-put"
+  },
+  {
+   "id": "getTheBranchingModelForARepository",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/branching-model",
+   "tag": "Branching model",
+   "summary": "Get the branching model for a repository",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-branching-model/#api-repositories-workspace-repo-slug-branching-model-get"
+  },
+  {
+   "id": "getTheBranchingModelConfigForARepository",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/branching-model/settings",
+   "tag": "Branching model",
+   "summary": "Get the branching model config for a repository",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-branching-model/#api-repositories-workspace-repo-slug-branching-model-settings-get"
+  },
+  {
+   "id": "updateTheBranchingModelConfigForARepository",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/branching-model/settings",
+   "tag": "Branching model",
+   "summary": "Update the branching model config for a repository",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-branching-model/#api-repositories-workspace-repo-slug-branching-model-settings-put"
+  },
+  {
+   "id": "getTheEffectiveOrCurrentlyAppliedBranchingModelForARepository",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/effective-branching-model",
+   "tag": "Branching model",
+   "summary": "Get the effective, or currently applied, branching model for a repository",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-branching-model/#api-repositories-workspace-repo-slug-effective-branching-model-get"
+  },
+  {
+   "id": "getTheBranchingModelForAProject",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/projects/{project_key}/branching-model",
+   "tag": "Branching model",
+   "summary": "Get the branching model for a project",
+   "path_params": [
+    "project_key",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-branching-model/#api-workspaces-workspace-projects-project-key-branching-model-get"
+  },
+  {
+   "id": "getTheBranchingModelConfigForAProject",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/projects/{project_key}/branching-model/settings",
+   "tag": "Branching model",
+   "summary": "Get the branching model config for a project",
+   "path_params": [
+    "project_key",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-branching-model/#api-workspaces-workspace-projects-project-key-branching-model-settings-get"
+  },
+  {
+   "id": "updateTheBranchingModelConfigForAProject",
+   "method": "PUT",
+   "path": "/workspaces/{workspace}/projects/{project_key}/branching-model/settings",
+   "tag": "Branching model",
+   "summary": "Update the branching model config for a project",
+   "path_params": [
+    "project_key",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-branching-model/#api-workspaces-workspace-projects-project-key-branching-model-settings-put"
+  },
+  {
+   "id": "listCommitStatusesForACommit",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses",
+   "tag": "Commit statuses",
+   "summary": "List commit statuses for a commit",
+   "path_params": [
+    "commit",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "refname",
+     "type": "string",
+     "required": false,
+     "description": "If specified, only return commit status objects that were either created without a refname, or were created with the specified refname"
+    },
+    {
+     "name": "q",
+     "type": "string",
+     "required": false,
+     "description": "Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering)."
+    },
+    {
+     "name": "sort",
+     "type": "string",
+     "required": false,
+     "description": "Field by which the results should be sorted as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). Defaults to `created_on`."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commit-statuses/#api-repositories-workspace-repo-slug-commit-commit-statuses-get"
+  },
+  {
+   "id": "createABuildStatusForACommit",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses/build",
+   "tag": "Commit statuses",
+   "summary": "Create a build status for a commit",
+   "path_params": [
+    "commit",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commit-statuses/#api-repositories-workspace-repo-slug-commit-commit-statuses-build-post"
+  },
+  {
+   "id": "getABuildStatusForACommit",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses/build/{key}",
+   "tag": "Commit statuses",
+   "summary": "Get a build status for a commit",
+   "path_params": [
+    "commit",
+    "key",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commit-statuses/#api-repositories-workspace-repo-slug-commit-commit-statuses-build-key-get"
+  },
+  {
+   "id": "updateABuildStatusForACommit",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses/build/{key}",
+   "tag": "Commit statuses",
+   "summary": "Update a build status for a commit",
+   "path_params": [
+    "commit",
+    "key",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commit-statuses/#api-repositories-workspace-repo-slug-commit-commit-statuses-build-key-put"
+  },
+  {
+   "id": "getACommit",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}",
+   "tag": "Commits",
+   "summary": "Get a commit",
+   "path_params": [
+    "commit",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-commit-commit-get"
+  },
+  {
+   "id": "unapproveACommit",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/approve",
+   "tag": "Commits",
+   "summary": "Unapprove a commit",
+   "path_params": [
+    "commit",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-commit-commit-approve-delete"
+  },
+  {
+   "id": "approveACommit",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/approve",
+   "tag": "Commits",
+   "summary": "Approve a commit",
+   "path_params": [
+    "commit",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-commit-commit-approve-post"
+  },
+  {
+   "id": "listACommitSComments",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/comments",
+   "tag": "Commits",
+   "summary": "List a commit's comments",
+   "path_params": [
+    "commit",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "q",
+     "type": "string",
+     "required": false,
+     "description": "Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering)."
+    },
+    {
+     "name": "sort",
+     "type": "string",
+     "required": false,
+     "description": "Field by which the results should be sorted as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering)."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-commit-commit-comments-get"
+  },
+  {
+   "id": "createCommentForACommit",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/comments",
+   "tag": "Commits",
+   "summary": "Create comment for a commit",
+   "path_params": [
+    "commit",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-commit-commit-comments-post"
+  },
+  {
+   "id": "deleteACommitComment",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/comments/{comment_id}",
+   "tag": "Commits",
+   "summary": "Delete a commit comment",
+   "path_params": [
+    "comment_id",
+    "commit",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-commit-commit-comments-comment-id-delete"
+  },
+  {
+   "id": "getACommitComment",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/comments/{comment_id}",
+   "tag": "Commits",
+   "summary": "Get a commit comment",
+   "path_params": [
+    "comment_id",
+    "commit",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-commit-commit-comments-comment-id-get"
+  },
+  {
+   "id": "updateACommitComment",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/comments/{comment_id}",
+   "tag": "Commits",
+   "summary": "Update a commit comment",
+   "path_params": [
+    "comment_id",
+    "commit",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-commit-commit-comments-comment-id-put"
+  },
+  {
+   "id": "listCommits",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/commits",
+   "tag": "Commits",
+   "summary": "List commits",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-commits-get"
+  },
+  {
+   "id": "listCommitsWithIncludeExclude",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/commits",
+   "tag": "Commits",
+   "summary": "List commits with include/exclude",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-commits-post"
+  },
+  {
+   "id": "listCommitsForRevision",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/commits/{revision}",
+   "tag": "Commits",
+   "summary": "List commits for revision",
+   "path_params": [
+    "repo_slug",
+    "revision",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-commits-revision-get"
+  },
+  {
+   "id": "listCommitsForRevisionUsingIncludeExclude",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/commits/{revision}",
+   "tag": "Commits",
+   "summary": "List commits for revision using include/exclude",
+   "path_params": [
+    "repo_slug",
+    "revision",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-commits-revision-post"
+  },
+  {
+   "id": "compareTwoCommits",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/diff/{spec}",
+   "tag": "Commits",
+   "summary": "Compare two commits",
+   "path_params": [
+    "repo_slug",
+    "spec",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "context",
+     "type": "integer",
+     "required": false,
+     "description": "Generate diffs with <n> lines of context instead of the usual three."
+    },
+    {
+     "name": "path",
+     "type": "string",
+     "required": false,
+     "description": "Limit the diff to a particular file (this parameter can be repeated for multiple paths)."
+    },
+    {
+     "name": "ignore_whitespace",
+     "type": "boolean",
+     "required": false,
+     "description": "Generate diffs that ignore whitespace."
+    },
+    {
+     "name": "binary",
+     "type": "boolean",
+     "required": false,
+     "description": "Generate diffs that include binary files, true if omitted."
+    },
+    {
+     "name": "renames",
+     "type": "boolean",
+     "required": false,
+     "description": "Whether to perform rename detection, true if omitted."
+    },
+    {
+     "name": "merge",
+     "type": "boolean",
+     "required": false,
+     "description": "This parameter is deprecated. The 'topic' parameter should be used instead. The 'merge' and 'topic' parameters cannot be both used at the same time. If true, the source commit is merged into the destination commit, and then a diff from the\u2026"
+    },
+    {
+     "name": "topic",
+     "type": "boolean",
+     "required": false,
+     "description": "If true, returns 2-way 'three-dot' diff. This is a diff between the source commit and the merge base of the source commit and the destination commit. If false, a simple 'two dot' diff between the source and destination is returned. If omit\u2026"
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-diff-spec-get"
+  },
+  {
+   "id": "compareTwoCommitDiffStats",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/diffstat/{spec}",
+   "tag": "Commits",
+   "summary": "Compare two commit diff stats",
+   "path_params": [
+    "repo_slug",
+    "spec",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "ignore_whitespace",
+     "type": "boolean",
+     "required": false,
+     "description": "Generate diffs that ignore whitespace"
+    },
+    {
+     "name": "merge",
+     "type": "boolean",
+     "required": false,
+     "description": "This parameter is deprecated. The 'topic' parameter should be used instead. The 'merge' and 'topic' parameters cannot be both used at the same time. If true, the source commit is merged into the destination commit, and then a diffstat from\u2026"
+    },
+    {
+     "name": "path",
+     "type": "string",
+     "required": false,
+     "description": "Limit the diffstat to a particular file (this parameter can be repeated for multiple paths)."
+    },
+    {
+     "name": "renames",
+     "type": "boolean",
+     "required": false,
+     "description": "Whether to perform rename detection, true if omitted."
+    },
+    {
+     "name": "topic",
+     "type": "boolean",
+     "required": false,
+     "description": "If true, returns 2-way 'three-dot' diff. This is a diff between the source commit and the merge base of the source commit and the destination commit. If false, a simple 'two dot' diff between the source and destination is returned."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-diffstat-spec-get"
+  },
+  {
+   "id": "getFileConflictsForACommitSpec",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/file-conflicts/{spec}",
+   "tag": "Commits",
+   "summary": "Get file conflicts for a commit spec",
+   "path_params": [
+    "repo_slug",
+    "spec",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-file-conflicts-spec-get"
+  },
+  {
+   "id": "getTheCommonAncestorBetweenTwoCommits",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/merge-base/{revspec}",
+   "tag": "Commits",
+   "summary": "Get the common ancestor between two commits",
+   "path_params": [
+    "repo_slug",
+    "revspec",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-merge-base-revspec-get"
+  },
+  {
+   "id": "getAPatchForTwoCommits",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/patch/{spec}",
+   "tag": "Commits",
+   "summary": "Get a patch for two commits",
+   "path_params": [
+    "repo_slug",
+    "spec",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-patch-spec-get"
+  },
+  {
+   "id": "listRepositoryDeployKeys",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/deploy-keys",
+   "tag": "Deployments",
+   "summary": "List repository deploy keys",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-deployments/#api-repositories-workspace-repo-slug-deploy-keys-get"
+  },
+  {
+   "id": "addARepositoryDeployKey",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/deploy-keys",
+   "tag": "Deployments",
+   "summary": "Add a repository deploy key",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-deployments/#api-repositories-workspace-repo-slug-deploy-keys-post"
+  },
+  {
+   "id": "deleteARepositoryDeployKey",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/deploy-keys/{key_id}",
+   "tag": "Deployments",
+   "summary": "Delete a repository deploy key",
+   "path_params": [
+    "key_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-deployments/#api-repositories-workspace-repo-slug-deploy-keys-key-id-delete"
+  },
+  {
+   "id": "getARepositoryDeployKey",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/deploy-keys/{key_id}",
+   "tag": "Deployments",
+   "summary": "Get a repository deploy key",
+   "path_params": [
+    "key_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-deployments/#api-repositories-workspace-repo-slug-deploy-keys-key-id-get"
+  },
+  {
+   "id": "updateARepositoryDeployKey",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/deploy-keys/{key_id}",
+   "tag": "Deployments",
+   "summary": "Update a repository deploy key",
+   "path_params": [
+    "key_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-deployments/#api-repositories-workspace-repo-slug-deploy-keys-key-id-put"
+  },
+  {
+   "id": "getDeploymentsForRepository",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/deployments",
+   "tag": "Deployments",
+   "summary": "List deployments",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-deployments/#api-repositories-workspace-repo-slug-deployments-get"
+  },
+  {
+   "id": "getDeploymentForRepository",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/deployments/{deployment_uuid}",
+   "tag": "Deployments",
+   "summary": "Get a deployment",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "deployment_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-deployments/#api-repositories-workspace-repo-slug-deployments-deployment-uuid-get"
+  },
+  {
+   "id": "getEnvironmentsForRepository",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/environments",
+   "tag": "Deployments",
+   "summary": "List environments",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-deployments/#api-repositories-workspace-repo-slug-environments-get"
+  },
+  {
+   "id": "createEnvironment",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/environments",
+   "tag": "Deployments",
+   "summary": "Create an environment",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-deployments/#api-repositories-workspace-repo-slug-environments-post"
+  },
+  {
+   "id": "deleteEnvironmentForRepository",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/environments/{environment_uuid}",
+   "tag": "Deployments",
+   "summary": "Delete an environment",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "environment_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-deployments/#api-repositories-workspace-repo-slug-environments-environment-uuid-delete"
+  },
+  {
+   "id": "getEnvironmentForRepository",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/environments/{environment_uuid}",
+   "tag": "Deployments",
+   "summary": "Get an environment",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "environment_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-deployments/#api-repositories-workspace-repo-slug-environments-environment-uuid-get"
+  },
+  {
+   "id": "updateEnvironmentForRepository",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/environments/{environment_uuid}/changes",
+   "tag": "Deployments",
+   "summary": "Update an environment",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "environment_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-deployments/#api-repositories-workspace-repo-slug-environments-environment-uuid-changes-post"
+  },
+  {
+   "id": "listProjectDeployKeys",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/projects/{project_key}/deploy-keys",
+   "tag": "Deployments",
+   "summary": "List project deploy keys",
+   "path_params": [
+    "project_key",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-deployments/#api-workspaces-workspace-projects-project-key-deploy-keys-get"
+  },
+  {
+   "id": "createAProjectDeployKey",
+   "method": "POST",
+   "path": "/workspaces/{workspace}/projects/{project_key}/deploy-keys",
+   "tag": "Deployments",
+   "summary": "Create a project deploy key",
+   "path_params": [
+    "project_key",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-deployments/#api-workspaces-workspace-projects-project-key-deploy-keys-post"
+  },
+  {
+   "id": "deleteADeployKeyFromAProject",
+   "method": "DELETE",
+   "path": "/workspaces/{workspace}/projects/{project_key}/deploy-keys/{key_id}",
+   "tag": "Deployments",
+   "summary": "Delete a deploy key from a project",
+   "path_params": [
+    "key_id",
+    "project_key",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-deployments/#api-workspaces-workspace-projects-project-key-deploy-keys-key-id-delete"
+  },
+  {
+   "id": "getAProjectDeployKey",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/projects/{project_key}/deploy-keys/{key_id}",
+   "tag": "Deployments",
+   "summary": "Get a project deploy key",
+   "path_params": [
+    "key_id",
+    "project_key",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-deployments/#api-workspaces-workspace-projects-project-key-deploy-keys-key-id-get"
+  },
+  {
+   "id": "listDownloadArtifacts",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/downloads",
+   "tag": "Downloads",
+   "summary": "List download artifacts",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-downloads/#api-repositories-workspace-repo-slug-downloads-get"
+  },
+  {
+   "id": "uploadADownloadArtifact",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/downloads",
+   "tag": "Downloads",
+   "summary": "Upload a download artifact",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-downloads/#api-repositories-workspace-repo-slug-downloads-post"
+  },
+  {
+   "id": "deleteADownloadArtifact",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/downloads/{filename}",
+   "tag": "Downloads",
+   "summary": "Delete a download artifact",
+   "path_params": [
+    "filename",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-downloads/#api-repositories-workspace-repo-slug-downloads-filename-delete"
+  },
+  {
+   "id": "getADownloadArtifactLink",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/downloads/{filename}",
+   "tag": "Downloads",
+   "summary": "Get a download artifact link",
+   "path_params": [
+    "filename",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-downloads/#api-repositories-workspace-repo-slug-downloads-filename-get"
+  },
+  {
+   "id": "listGpgKeys",
+   "method": "GET",
+   "path": "/users/{selected_user}/gpg-keys",
+   "tag": "GPG",
+   "summary": "List GPG keys",
+   "path_params": [
+    "selected_user"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-gpg/#api-users-selected-user-gpg-keys-get"
+  },
+  {
+   "id": "addANewGpgKey",
+   "method": "POST",
+   "path": "/users/{selected_user}/gpg-keys",
+   "tag": "GPG",
+   "summary": "Add a new GPG key",
+   "path_params": [
+    "selected_user"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-gpg/#api-users-selected-user-gpg-keys-post"
+  },
+  {
+   "id": "deleteAGpgKey",
+   "method": "DELETE",
+   "path": "/users/{selected_user}/gpg-keys/{fingerprint}",
+   "tag": "GPG",
+   "summary": "Delete a GPG key",
+   "path_params": [
+    "fingerprint",
+    "selected_user"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-gpg/#api-users-selected-user-gpg-keys-fingerprint-delete"
+  },
+  {
+   "id": "getAGpgKey",
+   "method": "GET",
+   "path": "/users/{selected_user}/gpg-keys/{fingerprint}",
+   "tag": "GPG",
+   "summary": "Get a GPG key",
+   "path_params": [
+    "fingerprint",
+    "selected_user"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-gpg/#api-users-selected-user-gpg-keys-fingerprint-get"
+  },
+  {
+   "id": "getDeploymentVariables",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/deployments_config/environments/{environment_uuid}/variables",
+   "tag": "Pipelines",
+   "summary": "List variables for an environment",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "environment_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-deployments-config-environments-environment-uuid-variables-get"
+  },
+  {
+   "id": "createDeploymentVariable",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/deployments_config/environments/{environment_uuid}/variables",
+   "tag": "Pipelines",
+   "summary": "Create a variable for an environment",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "environment_uuid"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-deployments-config-environments-environment-uuid-variables-post"
+  },
+  {
+   "id": "deleteDeploymentVariable",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/deployments_config/environments/{environment_uuid}/variables/{variable_uuid}",
+   "tag": "Pipelines",
+   "summary": "Delete a variable for an environment",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "environment_uuid",
+    "variable_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-deployments-config-environments-environment-uuid-variables-variable-uuid-delete"
+  },
+  {
+   "id": "updateDeploymentVariable",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/deployments_config/environments/{environment_uuid}/variables/{variable_uuid}",
+   "tag": "Pipelines",
+   "summary": "Update a variable for an environment",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "environment_uuid",
+    "variable_uuid"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-deployments-config-environments-environment-uuid-variables-variable-uuid-put"
+  },
+  {
+   "id": "getPipelinesForRepository",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines",
+   "tag": "Pipelines",
+   "summary": "List pipelines",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [
+    {
+     "name": "creator.uuid",
+     "type": "string",
+     "required": false,
+     "description": "The UUID of the creator of the pipeline to filter by."
+    },
+    {
+     "name": "target.ref_type",
+     "type": "string",
+     "required": false,
+     "description": "The type of the reference to filter by."
+    },
+    {
+     "name": "target.ref_name",
+     "type": "string",
+     "required": false,
+     "description": "The reference name to filter by."
+    },
+    {
+     "name": "target.branch",
+     "type": "string",
+     "required": false,
+     "description": "The name of the branch to filter by."
+    },
+    {
+     "name": "target.commit.hash",
+     "type": "string",
+     "required": false,
+     "description": "The revision to filter by."
+    },
+    {
+     "name": "target.selector.pattern",
+     "type": "string",
+     "required": false,
+     "description": "The pipeline pattern to filter by."
+    },
+    {
+     "name": "target.selector.type",
+     "type": "string",
+     "required": false,
+     "description": "The type of pipeline to filter by."
+    },
+    {
+     "name": "created_on",
+     "type": "string",
+     "required": false,
+     "description": "The creation date to filter by."
+    },
+    {
+     "name": "trigger_type",
+     "type": "string",
+     "required": false,
+     "description": "The trigger type to filter by."
+    },
+    {
+     "name": "status",
+     "type": "string",
+     "required": false,
+     "description": "The pipeline status to filter by."
+    },
+    {
+     "name": "sort",
+     "type": "string",
+     "required": false,
+     "description": "The attribute name to sort on."
+    },
+    {
+     "name": "page",
+     "type": "integer",
+     "required": false,
+     "description": "The page number of elements to retrieve."
+    },
+    {
+     "name": "pagelen",
+     "type": "integer",
+     "required": false,
+     "description": "The maximum number of results to return."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-get"
+  },
+  {
+   "id": "createPipelineForRepository",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines",
+   "tag": "Pipelines",
+   "summary": "Run a pipeline",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [
+    {
+     "name": "merge_defaults",
+     "type": "boolean",
+     "required": false,
+     "description": "Whether to merge repository-level defaults into the supplied YAML. Defaults to false."
+    },
+    {
+     "name": "target_branch_to_create",
+     "type": "string",
+     "required": false,
+     "description": "Optional branch name to create from the requested branch or commit target."
+    }
+   ],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-post"
+  },
+  {
+   "id": "deleteRepositoryPipelineCaches",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/caches",
+   "tag": "Pipelines",
+   "summary": "Delete caches",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [
+    {
+     "name": "name",
+     "type": "string",
+     "required": true,
+     "description": "The cache name."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-caches-delete"
+  },
+  {
+   "id": "getRepositoryPipelineCaches",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/caches",
+   "tag": "Pipelines",
+   "summary": "List caches",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-caches-get"
+  },
+  {
+   "id": "deleteRepositoryPipelineCache",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/caches/{cache_uuid}",
+   "tag": "Pipelines",
+   "summary": "Delete a cache",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "cache_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-caches-cache-uuid-delete"
+  },
+  {
+   "id": "getRepositoryPipelineCacheContentURI",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/caches/{cache_uuid}/content-uri",
+   "tag": "Pipelines",
+   "summary": "Get cache content URI",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "cache_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-caches-cache-uuid-content-uri-get"
+  },
+  {
+   "id": "getRepositoryRunners",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/runners",
+   "tag": "Pipelines",
+   "summary": "Get repository runners",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-runners-get"
+  },
+  {
+   "id": "createRepositoryRunner",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/runners",
+   "tag": "Pipelines",
+   "summary": "Create repository runner",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-runners-post"
+  },
+  {
+   "id": "deleteRepositoryRunner",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/runners/{runner_uuid}",
+   "tag": "Pipelines",
+   "summary": "Delete repository runner",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "runner_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-runners-runner-uuid-delete"
+  },
+  {
+   "id": "getRepositoryRunner",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/runners/{runner_uuid}",
+   "tag": "Pipelines",
+   "summary": "Get repository runner",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "runner_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-runners-runner-uuid-get"
+  },
+  {
+   "id": "updateRepositoryRunner",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines-config/runners/{runner_uuid}",
+   "tag": "Pipelines",
+   "summary": "Update repository runner",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "runner_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-runners-runner-uuid-put"
+  },
+  {
+   "id": "getPipelineForRepository",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}",
+   "tag": "Pipelines",
+   "summary": "Get a pipeline",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "pipeline_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-pipeline-uuid-get"
+  },
+  {
+   "id": "getPipelineStepsForRepository",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps",
+   "tag": "Pipelines",
+   "summary": "List steps for a pipeline",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "pipeline_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-pipeline-uuid-steps-get"
+  },
+  {
+   "id": "getPipelineStepForRepository",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps/{step_uuid}",
+   "tag": "Pipelines",
+   "summary": "Get a step of a pipeline",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "pipeline_uuid",
+    "step_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-pipeline-uuid-steps-step-uuid-get"
+  },
+  {
+   "id": "getPipelineStepLogForRepository",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps/{step_uuid}/log",
+   "tag": "Pipelines",
+   "summary": "Get log file for a step",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "pipeline_uuid",
+    "step_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-pipeline-uuid-steps-step-uuid-log-get"
+  },
+  {
+   "id": "getPipelineContainerLog",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps/{step_uuid}/logs/{log_uuid}",
+   "tag": "Pipelines",
+   "summary": "Get the logs for the build container or a service container for a given step of a pipeline.",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "pipeline_uuid",
+    "step_uuid",
+    "log_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-pipeline-uuid-steps-step-uuid-logs-log-uuid-get"
+  },
+  {
+   "id": "getPipelineTestReports",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps/{step_uuid}/test_reports",
+   "tag": "Pipelines",
+   "summary": "Get a summary of test reports for a given step of a pipeline.",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "pipeline_uuid",
+    "step_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-pipeline-uuid-steps-step-uuid-test-reports-get"
+  },
+  {
+   "id": "getPipelineTestReportTestCases",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps/{step_uuid}/test_reports/test_cases",
+   "tag": "Pipelines",
+   "summary": "Get test cases for a given step of a pipeline.",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "pipeline_uuid",
+    "step_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-pipeline-uuid-steps-step-uuid-test-reports-test-cases-get"
+  },
+  {
+   "id": "getPipelineTestReportTestCaseReasons",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/steps/{step_uuid}/test_reports/test_cases/{test_case_uuid}/test_case_reasons",
+   "tag": "Pipelines",
+   "summary": "Get test case reasons (output) for a given test case in a step of a pipeline.",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "pipeline_uuid",
+    "step_uuid",
+    "test_case_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-pipeline-uuid-steps-step-uuid-test-reports-test-cases-test-case-uuid-test-case-reasons-get"
+  },
+  {
+   "id": "stopPipeline",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines/{pipeline_uuid}/stopPipeline",
+   "tag": "Pipelines",
+   "summary": "Stop a pipeline",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "pipeline_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-pipeline-uuid-stoppipeline-post"
+  },
+  {
+   "id": "getRepositoryPipelineConfig",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config",
+   "tag": "Pipelines",
+   "summary": "Get configuration",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-get"
+  },
+  {
+   "id": "updateRepositoryPipelineConfig",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config",
+   "tag": "Pipelines",
+   "summary": "Update configuration",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-put"
+  },
+  {
+   "id": "updateRepositoryBuildNumber",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/build_number",
+   "tag": "Pipelines",
+   "summary": "Update the next build number",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-build-number-put"
+  },
+  {
+   "id": "getRepositoryPipelineSchedules",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/schedules",
+   "tag": "Pipelines",
+   "summary": "List schedules",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-schedules-get"
+  },
+  {
+   "id": "createRepositoryPipelineSchedule",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/schedules",
+   "tag": "Pipelines",
+   "summary": "Create a schedule",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-schedules-post"
+  },
+  {
+   "id": "deleteRepositoryPipelineSchedule",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/schedules/{schedule_uuid}",
+   "tag": "Pipelines",
+   "summary": "Delete a schedule",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "schedule_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-schedules-schedule-uuid-delete"
+  },
+  {
+   "id": "getRepositoryPipelineSchedule",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/schedules/{schedule_uuid}",
+   "tag": "Pipelines",
+   "summary": "Get a schedule",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "schedule_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-schedules-schedule-uuid-get"
+  },
+  {
+   "id": "updateRepositoryPipelineSchedule",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/schedules/{schedule_uuid}",
+   "tag": "Pipelines",
+   "summary": "Update a schedule",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "schedule_uuid"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-schedules-schedule-uuid-put"
+  },
+  {
+   "id": "getRepositoryPipelineScheduleExecutions",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/schedules/{schedule_uuid}/executions",
+   "tag": "Pipelines",
+   "summary": "List executions of a schedule",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "schedule_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-schedules-schedule-uuid-executions-get"
+  },
+  {
+   "id": "deleteRepositoryPipelineKeyPair",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/key_pair",
+   "tag": "Pipelines",
+   "summary": "Delete SSH key pair",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-ssh-key-pair-delete"
+  },
+  {
+   "id": "getRepositoryPipelineSshKeyPair",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/key_pair",
+   "tag": "Pipelines",
+   "summary": "Get SSH key pair",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-ssh-key-pair-get"
+  },
+  {
+   "id": "updateRepositoryPipelineKeyPair",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/key_pair",
+   "tag": "Pipelines",
+   "summary": "Update SSH key pair",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-ssh-key-pair-put"
+  },
+  {
+   "id": "getRepositoryPipelineKnownHosts",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/known_hosts",
+   "tag": "Pipelines",
+   "summary": "List known hosts",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-ssh-known-hosts-get"
+  },
+  {
+   "id": "createRepositoryPipelineKnownHost",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/known_hosts",
+   "tag": "Pipelines",
+   "summary": "Create a known host",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-ssh-known-hosts-post"
+  },
+  {
+   "id": "deleteRepositoryPipelineKnownHost",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/known_hosts/{known_host_uuid}",
+   "tag": "Pipelines",
+   "summary": "Delete a known host",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "known_host_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-ssh-known-hosts-known-host-uuid-delete"
+  },
+  {
+   "id": "getRepositoryPipelineKnownHost",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/known_hosts/{known_host_uuid}",
+   "tag": "Pipelines",
+   "summary": "Get a known host",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "known_host_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-ssh-known-hosts-known-host-uuid-get"
+  },
+  {
+   "id": "updateRepositoryPipelineKnownHost",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/ssh/known_hosts/{known_host_uuid}",
+   "tag": "Pipelines",
+   "summary": "Update a known host",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "known_host_uuid"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-ssh-known-hosts-known-host-uuid-put"
+  },
+  {
+   "id": "getRepositoryPipelineVariables",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/variables",
+   "tag": "Pipelines",
+   "summary": "List variables for a repository",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-variables-get"
+  },
+  {
+   "id": "createRepositoryPipelineVariable",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/variables",
+   "tag": "Pipelines",
+   "summary": "Create a variable for a repository",
+   "path_params": [
+    "workspace",
+    "repo_slug"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-variables-post"
+  },
+  {
+   "id": "deleteRepositoryPipelineVariable",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/variables/{variable_uuid}",
+   "tag": "Pipelines",
+   "summary": "Delete a variable for a repository",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "variable_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-variables-variable-uuid-delete"
+  },
+  {
+   "id": "getRepositoryPipelineVariable",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/variables/{variable_uuid}",
+   "tag": "Pipelines",
+   "summary": "Get a variable for a repository",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "variable_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-variables-variable-uuid-get"
+  },
+  {
+   "id": "updateRepositoryPipelineVariable",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/pipelines_config/variables/{variable_uuid}",
+   "tag": "Pipelines",
+   "summary": "Update a variable for a repository",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "variable_uuid"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-repositories-workspace-repo-slug-pipelines-config-variables-variable-uuid-put"
+  },
+  {
+   "id": "getPipelineVariablesForTeam",
+   "method": "GET",
+   "path": "/teams/{username}/pipelines_config/variables",
+   "tag": "Pipelines",
+   "summary": "List variables for an account",
+   "path_params": [
+    "username"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-teams-username-pipelines-config-variables-get"
+  },
+  {
+   "id": "createPipelineVariableForTeam",
+   "method": "POST",
+   "path": "/teams/{username}/pipelines_config/variables",
+   "tag": "Pipelines",
+   "summary": "Create a variable for a user",
+   "path_params": [
+    "username"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-teams-username-pipelines-config-variables-post"
+  },
+  {
+   "id": "deletePipelineVariableForTeam",
+   "method": "DELETE",
+   "path": "/teams/{username}/pipelines_config/variables/{variable_uuid}",
+   "tag": "Pipelines",
+   "summary": "Delete a variable for a team",
+   "path_params": [
+    "username",
+    "variable_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-teams-username-pipelines-config-variables-variable-uuid-delete"
+  },
+  {
+   "id": "getPipelineVariableForTeam",
+   "method": "GET",
+   "path": "/teams/{username}/pipelines_config/variables/{variable_uuid}",
+   "tag": "Pipelines",
+   "summary": "Get a variable for a team",
+   "path_params": [
+    "username",
+    "variable_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-teams-username-pipelines-config-variables-variable-uuid-get"
+  },
+  {
+   "id": "updatePipelineVariableForTeam",
+   "method": "PUT",
+   "path": "/teams/{username}/pipelines_config/variables/{variable_uuid}",
+   "tag": "Pipelines",
+   "summary": "Update a variable for a team",
+   "path_params": [
+    "username",
+    "variable_uuid"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-teams-username-pipelines-config-variables-variable-uuid-put"
+  },
+  {
+   "id": "getPipelineVariablesForUser",
+   "method": "GET",
+   "path": "/users/{selected_user}/pipelines_config/variables",
+   "tag": "Pipelines",
+   "summary": "List variables for a user",
+   "path_params": [
+    "selected_user"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-users-selected-user-pipelines-config-variables-get"
+  },
+  {
+   "id": "createPipelineVariableForUser",
+   "method": "POST",
+   "path": "/users/{selected_user}/pipelines_config/variables",
+   "tag": "Pipelines",
+   "summary": "Create a variable for a user",
+   "path_params": [
+    "selected_user"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-users-selected-user-pipelines-config-variables-post"
+  },
+  {
+   "id": "deletePipelineVariableForUser",
+   "method": "DELETE",
+   "path": "/users/{selected_user}/pipelines_config/variables/{variable_uuid}",
+   "tag": "Pipelines",
+   "summary": "Delete a variable for a user",
+   "path_params": [
+    "selected_user",
+    "variable_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-users-selected-user-pipelines-config-variables-variable-uuid-delete"
+  },
+  {
+   "id": "getPipelineVariableForUser",
+   "method": "GET",
+   "path": "/users/{selected_user}/pipelines_config/variables/{variable_uuid}",
+   "tag": "Pipelines",
+   "summary": "Get a variable for a user",
+   "path_params": [
+    "selected_user",
+    "variable_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-users-selected-user-pipelines-config-variables-variable-uuid-get"
+  },
+  {
+   "id": "updatePipelineVariableForUser",
+   "method": "PUT",
+   "path": "/users/{selected_user}/pipelines_config/variables/{variable_uuid}",
+   "tag": "Pipelines",
+   "summary": "Update a variable for a user",
+   "path_params": [
+    "selected_user",
+    "variable_uuid"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-users-selected-user-pipelines-config-variables-variable-uuid-put"
+  },
+  {
+   "id": "getOIDCConfiguration",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/pipelines-config/identity/oidc/.well-known/openid-configuration",
+   "tag": "Pipelines",
+   "summary": "Get OpenID configuration for OIDC in Pipelines",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-workspaces-workspace-pipelines-config-identity-oidc-well-known-openid-configuration-get"
+  },
+  {
+   "id": "getOIDCKeys",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/pipelines-config/identity/oidc/keys.json",
+   "tag": "Pipelines",
+   "summary": "Get keys for OIDC in Pipelines",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-workspaces-workspace-pipelines-config-identity-oidc-keys-json-get"
+  },
+  {
+   "id": "getWorkspaceRunners",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/pipelines-config/runners",
+   "tag": "Pipelines",
+   "summary": "Get workspace runners",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-workspaces-workspace-pipelines-config-runners-get"
+  },
+  {
+   "id": "createWorkspaceRunner",
+   "method": "POST",
+   "path": "/workspaces/{workspace}/pipelines-config/runners",
+   "tag": "Pipelines",
+   "summary": "Create workspace runner",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-workspaces-workspace-pipelines-config-runners-post"
+  },
+  {
+   "id": "deleteWorkspaceRunner",
+   "method": "DELETE",
+   "path": "/workspaces/{workspace}/pipelines-config/runners/{runner_uuid}",
+   "tag": "Pipelines",
+   "summary": "Delete workspace runner",
+   "path_params": [
+    "workspace",
+    "runner_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-workspaces-workspace-pipelines-config-runners-runner-uuid-delete"
+  },
+  {
+   "id": "getWorkspaceRunner",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/pipelines-config/runners/{runner_uuid}",
+   "tag": "Pipelines",
+   "summary": "Get workspace runner",
+   "path_params": [
+    "workspace",
+    "runner_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-workspaces-workspace-pipelines-config-runners-runner-uuid-get"
+  },
+  {
+   "id": "updateWorkspaceRunner",
+   "method": "PUT",
+   "path": "/workspaces/{workspace}/pipelines-config/runners/{runner_uuid}",
+   "tag": "Pipelines",
+   "summary": "Update workspace runner",
+   "path_params": [
+    "workspace",
+    "runner_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-workspaces-workspace-pipelines-config-runners-runner-uuid-put"
+  },
+  {
+   "id": "getPipelineVariablesForWorkspace",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/pipelines-config/variables",
+   "tag": "Pipelines",
+   "summary": "List variables for a workspace",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-workspaces-workspace-pipelines-config-variables-get"
+  },
+  {
+   "id": "createPipelineVariableForWorkspace",
+   "method": "POST",
+   "path": "/workspaces/{workspace}/pipelines-config/variables",
+   "tag": "Pipelines",
+   "summary": "Create a variable for a workspace",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-workspaces-workspace-pipelines-config-variables-post"
+  },
+  {
+   "id": "deletePipelineVariableForWorkspace",
+   "method": "DELETE",
+   "path": "/workspaces/{workspace}/pipelines-config/variables/{variable_uuid}",
+   "tag": "Pipelines",
+   "summary": "Delete a variable for a workspace",
+   "path_params": [
+    "workspace",
+    "variable_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-workspaces-workspace-pipelines-config-variables-variable-uuid-delete"
+  },
+  {
+   "id": "getPipelineVariableForWorkspace",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/pipelines-config/variables/{variable_uuid}",
+   "tag": "Pipelines",
+   "summary": "Get variable for a workspace",
+   "path_params": [
+    "workspace",
+    "variable_uuid"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-workspaces-workspace-pipelines-config-variables-variable-uuid-get"
+  },
+  {
+   "id": "updatePipelineVariableForWorkspace",
+   "method": "PUT",
+   "path": "/workspaces/{workspace}/pipelines-config/variables/{variable_uuid}",
+   "tag": "Pipelines",
+   "summary": "Update variable for a workspace",
+   "path_params": [
+    "workspace",
+    "variable_uuid"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pipelines/#api-workspaces-workspace-pipelines-config-variables-variable-uuid-put"
+  },
+  {
+   "id": "createAProjectInAWorkspace",
+   "method": "POST",
+   "path": "/workspaces/{workspace}/projects",
+   "tag": "Projects",
+   "summary": "Create a project in a workspace",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-projects/#api-workspaces-workspace-projects-post"
+  },
+  {
+   "id": "deleteAProjectForAWorkspace",
+   "method": "DELETE",
+   "path": "/workspaces/{workspace}/projects/{project_key}",
+   "tag": "Projects",
+   "summary": "Delete a project for a workspace",
+   "path_params": [
+    "project_key",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-projects/#api-workspaces-workspace-projects-project-key-delete"
+  },
+  {
+   "id": "getAProjectForAWorkspace",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/projects/{project_key}",
+   "tag": "Projects",
+   "summary": "Get a project for a workspace",
+   "path_params": [
+    "project_key",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-projects/#api-workspaces-workspace-projects-project-key-get"
+  },
+  {
+   "id": "updateAProjectForAWorkspace",
+   "method": "PUT",
+   "path": "/workspaces/{workspace}/projects/{project_key}",
+   "tag": "Projects",
+   "summary": "Update a project for a workspace",
+   "path_params": [
+    "project_key",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-projects/#api-workspaces-workspace-projects-project-key-put"
+  },
+  {
+   "id": "listTheDefaultReviewersInAProject",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/projects/{project_key}/default-reviewers",
+   "tag": "Projects",
+   "summary": "List the default reviewers in a project",
+   "path_params": [
+    "project_key",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-projects/#api-workspaces-workspace-projects-project-key-default-reviewers-get"
+  },
+  {
+   "id": "removeTheSpecificUserFromTheProjectSDefaultReviewers",
+   "method": "DELETE",
+   "path": "/workspaces/{workspace}/projects/{project_key}/default-reviewers/{selected_user}",
+   "tag": "Projects",
+   "summary": "Remove the specific user from the project's default reviewers",
+   "path_params": [
+    "project_key",
+    "selected_user",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-projects/#api-workspaces-workspace-projects-project-key-default-reviewers-selected-user-delete"
+  },
+  {
+   "id": "getADefaultReviewer",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/projects/{project_key}/default-reviewers/{selected_user}",
+   "tag": "Projects",
+   "summary": "Get a default reviewer",
+   "path_params": [
+    "project_key",
+    "selected_user",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-projects/#api-workspaces-workspace-projects-project-key-default-reviewers-selected-user-get"
+  },
+  {
+   "id": "addTheSpecificUserAsADefaultReviewerForTheProject",
+   "method": "PUT",
+   "path": "/workspaces/{workspace}/projects/{project_key}/default-reviewers/{selected_user}",
+   "tag": "Projects",
+   "summary": "Add the specific user as a default reviewer for the project",
+   "path_params": [
+    "project_key",
+    "selected_user",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-projects/#api-workspaces-workspace-projects-project-key-default-reviewers-selected-user-put"
+  },
+  {
+   "id": "listExplicitGroupPermissionsForAProject",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/groups",
+   "tag": "Projects",
+   "summary": "List explicit group permissions for a project",
+   "path_params": [
+    "project_key",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-projects/#api-workspaces-workspace-projects-project-key-permissions-config-groups-get"
+  },
+  {
+   "id": "deleteAnExplicitGroupPermissionForAProject",
+   "method": "DELETE",
+   "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/groups/{group_slug}",
+   "tag": "Projects",
+   "summary": "Delete an explicit group permission for a project",
+   "path_params": [
+    "group_slug",
+    "project_key",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-projects/#api-workspaces-workspace-projects-project-key-permissions-config-groups-group-slug-delete"
+  },
+  {
+   "id": "getAnExplicitGroupPermissionForAProject",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/groups/{group_slug}",
+   "tag": "Projects",
+   "summary": "Get an explicit group permission for a project",
+   "path_params": [
+    "group_slug",
+    "project_key",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-projects/#api-workspaces-workspace-projects-project-key-permissions-config-groups-group-slug-get"
+  },
+  {
+   "id": "updateAnExplicitGroupPermissionForAProject",
+   "method": "PUT",
+   "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/groups/{group_slug}",
+   "tag": "Projects",
+   "summary": "Update an explicit group permission for a project",
+   "path_params": [
+    "group_slug",
+    "project_key",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-projects/#api-workspaces-workspace-projects-project-key-permissions-config-groups-group-slug-put"
+  },
+  {
+   "id": "listExplicitUserPermissionsForAProject",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/users",
+   "tag": "Projects",
+   "summary": "List explicit user permissions for a project",
+   "path_params": [
+    "project_key",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-projects/#api-workspaces-workspace-projects-project-key-permissions-config-users-get"
+  },
+  {
+   "id": "deleteAnExplicitUserPermissionForAProject",
+   "method": "DELETE",
+   "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/users/{selected_user_id}",
+   "tag": "Projects",
+   "summary": "Delete an explicit user permission for a project",
+   "path_params": [
+    "project_key",
+    "selected_user_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-projects/#api-workspaces-workspace-projects-project-key-permissions-config-users-selected-user-id-delete"
+  },
+  {
+   "id": "getAnExplicitUserPermissionForAProject",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/users/{selected_user_id}",
+   "tag": "Projects",
+   "summary": "Get an explicit user permission for a project",
+   "path_params": [
+    "project_key",
+    "selected_user_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-projects/#api-workspaces-workspace-projects-project-key-permissions-config-users-selected-user-id-get"
+  },
+  {
+   "id": "updateAnExplicitUserPermissionForAProject",
+   "method": "PUT",
+   "path": "/workspaces/{workspace}/projects/{project_key}/permissions-config/users/{selected_user_id}",
+   "tag": "Projects",
+   "summary": "Update an explicit user permission for a project",
+   "path_params": [
+    "project_key",
+    "selected_user_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-projects/#api-workspaces-workspace-projects-project-key-permissions-config-users-selected-user-id-put"
+  },
+  {
+   "id": "getPullrequestsForCommit",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/pullrequests",
+   "tag": "Pullrequests",
+   "summary": "List pull requests that contain a commit",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "commit"
+   ],
+   "query_params": [
+    {
+     "name": "page",
+     "type": "integer",
+     "required": false,
+     "description": "Which page to retrieve"
+    },
+    {
+     "name": "pagelen",
+     "type": "integer",
+     "required": false,
+     "description": "How many pull requests to retrieve per page"
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-commit-commit-pullrequests-get"
+  },
+  {
+   "id": "listDefaultReviewers",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/default-reviewers",
+   "tag": "Pullrequests",
+   "summary": "List default reviewers",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-default-reviewers-get"
+  },
+  {
+   "id": "removeAUserFromTheDefaultReviewers",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/default-reviewers/{target_username}",
+   "tag": "Pullrequests",
+   "summary": "Remove a user from the default reviewers",
+   "path_params": [
+    "repo_slug",
+    "target_username",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-default-reviewers-target-username-delete"
+  },
+  {
+   "id": "getADefaultReviewer2",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/default-reviewers/{target_username}",
+   "tag": "Pullrequests",
+   "summary": "Get a default reviewer",
+   "path_params": [
+    "repo_slug",
+    "target_username",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-default-reviewers-target-username-get"
+  },
+  {
+   "id": "addAUserToTheDefaultReviewers",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/default-reviewers/{target_username}",
+   "tag": "Pullrequests",
+   "summary": "Add a user to the default reviewers",
+   "path_params": [
+    "repo_slug",
+    "target_username",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-default-reviewers-target-username-put"
+  },
+  {
+   "id": "listEffectiveDefaultReviewers",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/effective-default-reviewers",
+   "tag": "Pullrequests",
+   "summary": "List effective default reviewers",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-effective-default-reviewers-get"
+  },
+  {
+   "id": "listPullRequests",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests",
+   "tag": "Pullrequests",
+   "summary": "List pull requests",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "state",
+     "type": "string",
+     "required": false,
+     "description": "Only return pull requests that are in this state. This parameter can be repeated."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-get"
+  },
+  {
+   "id": "createAPullRequest",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests",
+   "tag": "Pullrequests",
+   "summary": "Create a pull request",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-post"
+  },
+  {
+   "id": "listAPullRequestActivityLog",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/activity",
+   "tag": "Pullrequests",
+   "summary": "List a pull request activity log",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-activity-get"
+  },
+  {
+   "id": "getAPullRequest",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}",
+   "tag": "Pullrequests",
+   "summary": "Get a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-get"
+  },
+  {
+   "id": "updateAPullRequest",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}",
+   "tag": "Pullrequests",
+   "summary": "Update a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-put"
+  },
+  {
+   "id": "listAPullRequestActivityLog2",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/activity",
+   "tag": "Pullrequests",
+   "summary": "List a pull request activity log",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-activity-get"
+  },
+  {
+   "id": "unapproveAPullRequest",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/approve",
+   "tag": "Pullrequests",
+   "summary": "Unapprove a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-approve-delete"
+  },
+  {
+   "id": "approveAPullRequest",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/approve",
+   "tag": "Pullrequests",
+   "summary": "Approve a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-approve-post"
+  },
+  {
+   "id": "listCommentsOnAPullRequest",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments",
+   "tag": "Pullrequests",
+   "summary": "List comments on a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-comments-get"
+  },
+  {
+   "id": "createACommentOnAPullRequest",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments",
+   "tag": "Pullrequests",
+   "summary": "Create a comment on a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-comments-post"
+  },
+  {
+   "id": "deleteACommentOnAPullRequest",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}",
+   "tag": "Pullrequests",
+   "summary": "Delete a comment on a pull request",
+   "path_params": [
+    "comment_id",
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-comments-comment-id-delete"
+  },
+  {
+   "id": "getACommentOnAPullRequest",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}",
+   "tag": "Pullrequests",
+   "summary": "Get a comment on a pull request",
+   "path_params": [
+    "comment_id",
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-comments-comment-id-get"
+  },
+  {
+   "id": "updateACommentOnAPullRequest",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}",
+   "tag": "Pullrequests",
+   "summary": "Update a comment on a pull request",
+   "path_params": [
+    "comment_id",
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-comments-comment-id-put"
+  },
+  {
+   "id": "reopenACommentThread",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}/resolve",
+   "tag": "Pullrequests",
+   "summary": "Reopen a comment thread",
+   "path_params": [
+    "comment_id",
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-comments-comment-id-resolve-delete"
+  },
+  {
+   "id": "resolveACommentThread",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}/resolve",
+   "tag": "Pullrequests",
+   "summary": "Resolve a comment thread",
+   "path_params": [
+    "comment_id",
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-comments-comment-id-resolve-post"
+  },
+  {
+   "id": "listCommitsOnAPullRequest",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/commits",
+   "tag": "Pullrequests",
+   "summary": "List commits on a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-commits-get"
+  },
+  {
+   "id": "getFileConflictsForAPullRequest",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/conflicts",
+   "tag": "Pullrequests",
+   "summary": "Get file conflicts for a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-conflicts-get"
+  },
+  {
+   "id": "declineAPullRequest",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/decline",
+   "tag": "Pullrequests",
+   "summary": "Decline a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-decline-post"
+  },
+  {
+   "id": "listChangesInAPullRequest",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/diff",
+   "tag": "Pullrequests",
+   "summary": "List changes in a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-diff-get"
+  },
+  {
+   "id": "getTheDiffStatForAPullRequest",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/diffstat",
+   "tag": "Pullrequests",
+   "summary": "Get the diff stat for a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-diffstat-get"
+  },
+  {
+   "id": "mergeAPullRequest",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/merge",
+   "tag": "Pullrequests",
+   "summary": "Merge a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "async",
+     "type": "boolean",
+     "required": false,
+     "description": "Default value is false. When set to true, runs merge asynchronously and immediately returns a 202 with polling link to the task-status API in the Location header. When set to false, runs merge and waits for it to complete, returning 200 wh\u2026"
+    }
+   ],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-merge-post"
+  },
+  {
+   "id": "getTheMergeTaskStatusForAPullRequest",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/merge/task-status/{task_id}",
+   "tag": "Pullrequests",
+   "summary": "Get the merge task status for a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "task_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-merge-task-status-task-id-get"
+  },
+  {
+   "id": "getThePatchForAPullRequest",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/patch",
+   "tag": "Pullrequests",
+   "summary": "Get the patch for a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-patch-get"
+  },
+  {
+   "id": "removeChangeRequestForAPullRequest",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/request-changes",
+   "tag": "Pullrequests",
+   "summary": "Remove change request for a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-request-changes-delete"
+  },
+  {
+   "id": "requestChangesForAPullRequest",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/request-changes",
+   "tag": "Pullrequests",
+   "summary": "Request changes for a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-request-changes-post"
+  },
+  {
+   "id": "listCommitStatusesForAPullRequest",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/statuses",
+   "tag": "Pullrequests",
+   "summary": "List commit statuses for a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "q",
+     "type": "string",
+     "required": false,
+     "description": "Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering)."
+    },
+    {
+     "name": "sort",
+     "type": "string",
+     "required": false,
+     "description": "Field by which the results should be sorted as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). Defaults to `created_on`."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-statuses-get"
+  },
+  {
+   "id": "listTasksOnAPullRequest",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks",
+   "tag": "Pullrequests",
+   "summary": "List tasks on a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "q",
+     "type": "string",
+     "required": false,
+     "description": "Query string to narrow down the response. See [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for details."
+    },
+    {
+     "name": "sort",
+     "type": "string",
+     "required": false,
+     "description": "Field by which the results should be sorted as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). Defaults to `created_on`."
+    },
+    {
+     "name": "pagelen",
+     "type": "integer",
+     "required": false,
+     "description": "Current number of objects on the existing page. The default value is 10 with 100 being the maximum allowed value. Individual APIs may enforce different values."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-tasks-get"
+  },
+  {
+   "id": "createATaskOnAPullRequest",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks",
+   "tag": "Pullrequests",
+   "summary": "Create a task on a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-tasks-post"
+  },
+  {
+   "id": "deleteATaskOnAPullRequest",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks/{task_id}",
+   "tag": "Pullrequests",
+   "summary": "Delete a task on a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "task_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-tasks-task-id-delete"
+  },
+  {
+   "id": "getATaskOnAPullRequest",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks/{task_id}",
+   "tag": "Pullrequests",
+   "summary": "Get a task on a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "task_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-tasks-task-id-get"
+  },
+  {
+   "id": "updateATaskOnAPullRequest",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks/{task_id}",
+   "tag": "Pullrequests",
+   "summary": "Update a task on a pull request",
+   "path_params": [
+    "pull_request_id",
+    "repo_slug",
+    "task_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-tasks-task-id-put"
+  },
+  {
+   "id": "listBranchesAndTags",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/refs",
+   "tag": "Refs",
+   "summary": "List branches and tags",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "q",
+     "type": "string",
+     "required": false,
+     "description": "Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering)."
+    },
+    {
+     "name": "sort",
+     "type": "string",
+     "required": false,
+     "description": "Field by which the results should be sorted as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). The `name` field is handled specially for refs in that, if specified as the sort field, it uses a natural sort order instea\u2026"
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-refs/#api-repositories-workspace-repo-slug-refs-get"
+  },
+  {
+   "id": "listOpenBranches",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/refs/branches",
+   "tag": "Refs",
+   "summary": "List open branches",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "q",
+     "type": "string",
+     "required": false,
+     "description": "Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering)."
+    },
+    {
+     "name": "sort",
+     "type": "string",
+     "required": false,
+     "description": "Field by which the results should be sorted as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). The `name` field is handled specially for branches in that, if specified as the sort field, it uses a natural sort order in\u2026"
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-refs/#api-repositories-workspace-repo-slug-refs-branches-get"
+  },
+  {
+   "id": "createABranch",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/refs/branches",
+   "tag": "Refs",
+   "summary": "Create a branch",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-refs/#api-repositories-workspace-repo-slug-refs-branches-post"
+  },
+  {
+   "id": "deleteABranch",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/refs/branches/{name}",
+   "tag": "Refs",
+   "summary": "Delete a branch",
+   "path_params": [
+    "name",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-refs/#api-repositories-workspace-repo-slug-refs-branches-name-delete"
+  },
+  {
+   "id": "getABranch",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/refs/branches/{name}",
+   "tag": "Refs",
+   "summary": "Get a branch",
+   "path_params": [
+    "name",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-refs/#api-repositories-workspace-repo-slug-refs-branches-name-get"
+  },
+  {
+   "id": "listTags",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/refs/tags",
+   "tag": "Refs",
+   "summary": "List tags",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "q",
+     "type": "string",
+     "required": false,
+     "description": "Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering)."
+    },
+    {
+     "name": "sort",
+     "type": "string",
+     "required": false,
+     "description": "Field by which the results should be sorted as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). The `name` field is handled specially for tags in that, if specified as the sort field, it uses a natural sort order instea\u2026"
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-refs/#api-repositories-workspace-repo-slug-refs-tags-get"
+  },
+  {
+   "id": "createATag",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/refs/tags",
+   "tag": "Refs",
+   "summary": "Create a tag",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-refs/#api-repositories-workspace-repo-slug-refs-tags-post"
+  },
+  {
+   "id": "deleteATag",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/refs/tags/{name}",
+   "tag": "Refs",
+   "summary": "Delete a tag",
+   "path_params": [
+    "name",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-refs/#api-repositories-workspace-repo-slug-refs-tags-name-delete"
+  },
+  {
+   "id": "getATag",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/refs/tags/{name}",
+   "tag": "Refs",
+   "summary": "Get a tag",
+   "path_params": [
+    "name",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-refs/#api-repositories-workspace-repo-slug-refs-tags-name-get"
+  },
+  {
+   "id": "getReportsForCommit",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports",
+   "tag": "Reports",
+   "summary": "List reports",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "commit"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-reports/#api-repositories-workspace-repo-slug-commit-commit-reports-get"
+  },
+  {
+   "id": "deleteReport",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}",
+   "tag": "Reports",
+   "summary": "Delete a report",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "commit",
+    "reportId"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-reports/#api-repositories-workspace-repo-slug-commit-commit-reports-reportid-delete"
+  },
+  {
+   "id": "getReport",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}",
+   "tag": "Reports",
+   "summary": "Get a report",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "commit",
+    "reportId"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-reports/#api-repositories-workspace-repo-slug-commit-commit-reports-reportid-get"
+  },
+  {
+   "id": "createOrUpdateReport",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}",
+   "tag": "Reports",
+   "summary": "Create or update a report",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "commit",
+    "reportId"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-reports/#api-repositories-workspace-repo-slug-commit-commit-reports-reportid-put"
+  },
+  {
+   "id": "getAnnotationsForReport",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}/annotations",
+   "tag": "Reports",
+   "summary": "List annotations",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "commit",
+    "reportId"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-reports/#api-repositories-workspace-repo-slug-commit-commit-reports-reportid-annotations-get"
+  },
+  {
+   "id": "bulkCreateOrUpdateAnnotations",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}/annotations",
+   "tag": "Reports",
+   "summary": "Bulk create or update annotations",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "commit",
+    "reportId"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-reports/#api-repositories-workspace-repo-slug-commit-commit-reports-reportid-annotations-post"
+  },
+  {
+   "id": "deleteAnnotation",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}/annotations/{annotationId}",
+   "tag": "Reports",
+   "summary": "Delete an annotation",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "commit",
+    "reportId",
+    "annotationId"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-reports/#api-repositories-workspace-repo-slug-commit-commit-reports-reportid-annotations-annotationid-delete"
+  },
+  {
+   "id": "getAnnotation",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}/annotations/{annotationId}",
+   "tag": "Reports",
+   "summary": "Get an annotation",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "commit",
+    "reportId",
+    "annotationId"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-reports/#api-repositories-workspace-repo-slug-commit-commit-reports-reportid-annotations-annotationid-get"
+  },
+  {
+   "id": "createOrUpdateAnnotation",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}/annotations/{annotationId}",
+   "tag": "Reports",
+   "summary": "Create or update an annotation",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "commit",
+    "reportId",
+    "annotationId"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-reports/#api-repositories-workspace-repo-slug-commit-commit-reports-reportid-annotations-annotationid-put"
+  },
+  {
+   "id": "listPublicRepositories",
+   "method": "GET",
+   "path": "/repositories",
+   "tag": "Repositories",
+   "summary": "List public repositories",
+   "path_params": [],
+   "query_params": [
+    {
+     "name": "after",
+     "type": "string",
+     "required": false,
+     "description": "Filter the results to include only repositories created on or after this [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp. Example: `YYYY-MM-DDTHH:mm:ss.sssZ`"
+    },
+    {
+     "name": "role",
+     "type": "string",
+     "required": false,
+     "description": "Filters the result based on the authenticated user's role on each repository. * **member**: returns repositories to which the user has explicit read access * **contributor**: returns repositories to which the user has explicit write access\u2026"
+    },
+    {
+     "name": "q",
+     "type": "string",
+     "required": false,
+     "description": "Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering). `role` parameter must also be specified."
+    },
+    {
+     "name": "sort",
+     "type": "string",
+     "required": false,
+     "description": "Field by which the results should be sorted as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering)."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-get"
+  },
+  {
+   "id": "listRepositoriesInAWorkspace",
+   "method": "GET",
+   "path": "/repositories/{workspace}",
+   "tag": "Repositories",
+   "summary": "List repositories in a workspace",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "role",
+     "type": "string",
+     "required": false,
+     "description": "Filters the result based on the authenticated user's role on each repository. * **member**: returns repositories to which the user has explicit read access * **contributor**: returns repositories to which the user has explicit write access\u2026"
+    },
+    {
+     "name": "q",
+     "type": "string",
+     "required": false,
+     "description": "Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering)."
+    },
+    {
+     "name": "sort",
+     "type": "string",
+     "required": false,
+     "description": "Field by which the results should be sorted as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering)."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-get"
+  },
+  {
+   "id": "deleteARepository",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}",
+   "tag": "Repositories",
+   "summary": "Delete a repository",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "redirect_to",
+     "type": "string",
+     "required": false,
+     "description": "If a repository has been moved to a new location, use this parameter to show users a friendly message in the Bitbucket UI that the repository has moved to a new location. However, a GET to this endpoint will still return a 404."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-delete"
+  },
+  {
+   "id": "getARepository",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}",
+   "tag": "Repositories",
+   "summary": "Get a repository",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-get"
+  },
+  {
+   "id": "createARepository",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}",
+   "tag": "Repositories",
+   "summary": "Create a repository",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-post"
+  },
+  {
+   "id": "updateARepository",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}",
+   "tag": "Repositories",
+   "summary": "Update a repository",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-put"
+  },
+  {
+   "id": "listRepositoryForks",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/forks",
+   "tag": "Repositories",
+   "summary": "List repository forks",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "role",
+     "type": "string",
+     "required": false,
+     "description": "Filters the result based on the authenticated user's role on each repository. * **member**: returns repositories to which the user has explicit read access * **contributor**: returns repositories to which the user has explicit write access\u2026"
+    },
+    {
+     "name": "q",
+     "type": "string",
+     "required": false,
+     "description": "Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering)."
+    },
+    {
+     "name": "sort",
+     "type": "string",
+     "required": false,
+     "description": "Field by which the results should be sorted as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering)."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-forks-get"
+  },
+  {
+   "id": "forkARepository",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/forks",
+   "tag": "Repositories",
+   "summary": "Fork a repository",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-forks-post"
+  },
+  {
+   "id": "listWebhooksForARepository",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/hooks",
+   "tag": "Repositories",
+   "summary": "List webhooks for a repository",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-hooks-get"
+  },
+  {
+   "id": "createAWebhookForARepository",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/hooks",
+   "tag": "Repositories",
+   "summary": "Create a webhook for a repository",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-hooks-post"
+  },
+  {
+   "id": "deleteAWebhookForARepository",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/hooks/{uid}",
+   "tag": "Repositories",
+   "summary": "Delete a webhook for a repository",
+   "path_params": [
+    "repo_slug",
+    "uid",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-hooks-uid-delete"
+  },
+  {
+   "id": "getAWebhookForARepository",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/hooks/{uid}",
+   "tag": "Repositories",
+   "summary": "Get a webhook for a repository",
+   "path_params": [
+    "repo_slug",
+    "uid",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-hooks-uid-get"
+  },
+  {
+   "id": "updateAWebhookForARepository",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/hooks/{uid}",
+   "tag": "Repositories",
+   "summary": "Update a webhook for a repository",
+   "path_params": [
+    "repo_slug",
+    "uid",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-hooks-uid-put"
+  },
+  {
+   "id": "retrieveTheInheritanceStateForRepositorySettings",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/override-settings",
+   "tag": "Repositories",
+   "summary": "Retrieve the inheritance state for repository settings",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-override-settings-get"
+  },
+  {
+   "id": "setTheInheritanceStateForRepositorySettings",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/override-settings",
+   "tag": "Repositories",
+   "summary": "Set the inheritance state for repository settings",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-override-settings-put"
+  },
+  {
+   "id": "listExplicitGroupPermissionsForARepository",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/permissions-config/groups",
+   "tag": "Repositories",
+   "summary": "List explicit group permissions for a repository",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-permissions-config-groups-get"
+  },
+  {
+   "id": "deleteAnExplicitGroupPermissionForARepository",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/permissions-config/groups/{group_slug}",
+   "tag": "Repositories",
+   "summary": "Delete an explicit group permission for a repository",
+   "path_params": [
+    "group_slug",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-permissions-config-groups-group-slug-delete"
+  },
+  {
+   "id": "getAnExplicitGroupPermissionForARepository",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/permissions-config/groups/{group_slug}",
+   "tag": "Repositories",
+   "summary": "Get an explicit group permission for a repository",
+   "path_params": [
+    "group_slug",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-permissions-config-groups-group-slug-get"
+  },
+  {
+   "id": "updateAnExplicitGroupPermissionForARepository",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/permissions-config/groups/{group_slug}",
+   "tag": "Repositories",
+   "summary": "Update an explicit group permission for a repository",
+   "path_params": [
+    "group_slug",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-permissions-config-groups-group-slug-put"
+  },
+  {
+   "id": "listExplicitUserPermissionsForARepository",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/permissions-config/users",
+   "tag": "Repositories",
+   "summary": "List explicit user permissions for a repository",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-permissions-config-users-get"
+  },
+  {
+   "id": "deleteAnExplicitUserPermissionForARepository",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/permissions-config/users/{selected_user_id}",
+   "tag": "Repositories",
+   "summary": "Delete an explicit user permission for a repository",
+   "path_params": [
+    "repo_slug",
+    "selected_user_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-permissions-config-users-selected-user-id-delete"
+  },
+  {
+   "id": "getAnExplicitUserPermissionForARepository",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/permissions-config/users/{selected_user_id}",
+   "tag": "Repositories",
+   "summary": "Get an explicit user permission for a repository",
+   "path_params": [
+    "repo_slug",
+    "selected_user_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-permissions-config-users-selected-user-id-get"
+  },
+  {
+   "id": "updateAnExplicitUserPermissionForARepository",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/permissions-config/users/{selected_user_id}",
+   "tag": "Repositories",
+   "summary": "Update an explicit user permission for a repository",
+   "path_params": [
+    "repo_slug",
+    "selected_user_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-permissions-config-users-selected-user-id-put"
+  },
+  {
+   "id": "listRepositoriesWatchers",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/watchers",
+   "tag": "Repositories",
+   "summary": "List repositories watchers",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-watchers-get"
+  },
+  {
+   "id": "listRepositoryPermissionsInAWorkspaceForAUser",
+   "method": "GET",
+   "path": "/user/workspaces/{workspace}/permissions/repositories",
+   "tag": "Repositories",
+   "summary": "List repository permissions in a workspace for a user",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "q",
+     "type": "string",
+     "required": false,
+     "description": "Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering)."
+    },
+    {
+     "name": "sort",
+     "type": "string",
+     "required": false,
+     "description": "Name of a response property sort the result by as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering)."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-user-workspaces-workspace-permissions-repositories-get"
+  },
+  {
+   "id": "listSshKeys",
+   "method": "GET",
+   "path": "/users/{selected_user}/ssh-keys",
+   "tag": "SSH",
+   "summary": "List SSH keys",
+   "path_params": [
+    "selected_user"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-ssh/#api-users-selected-user-ssh-keys-get"
+  },
+  {
+   "id": "addANewSshKey",
+   "method": "POST",
+   "path": "/users/{selected_user}/ssh-keys",
+   "tag": "SSH",
+   "summary": "Add a new SSH key",
+   "path_params": [
+    "selected_user"
+   ],
+   "query_params": [
+    {
+     "name": "expires_on",
+     "type": "string",
+     "required": false,
+     "description": "The date or date-time of when the key will expire, in [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) format. Example: `YYYY-MM-DDTHH:mm:ss.sssZ`"
+    }
+   ],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-ssh/#api-users-selected-user-ssh-keys-post"
+  },
+  {
+   "id": "deleteASshKey",
+   "method": "DELETE",
+   "path": "/users/{selected_user}/ssh-keys/{key_id}",
+   "tag": "SSH",
+   "summary": "Delete a SSH key",
+   "path_params": [
+    "key_id",
+    "selected_user"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-ssh/#api-users-selected-user-ssh-keys-key-id-delete"
+  },
+  {
+   "id": "getASshKey",
+   "method": "GET",
+   "path": "/users/{selected_user}/ssh-keys/{key_id}",
+   "tag": "SSH",
+   "summary": "Get a SSH key",
+   "path_params": [
+    "key_id",
+    "selected_user"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-ssh/#api-users-selected-user-ssh-keys-key-id-get"
+  },
+  {
+   "id": "updateASshKey",
+   "method": "PUT",
+   "path": "/users/{selected_user}/ssh-keys/{key_id}",
+   "tag": "SSH",
+   "summary": "Update a SSH key",
+   "path_params": [
+    "key_id",
+    "selected_user"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-ssh/#api-users-selected-user-ssh-keys-key-id-put"
+  },
+  {
+   "id": "searchTeam",
+   "method": "GET",
+   "path": "/teams/{username}/search/code",
+   "tag": "Search",
+   "summary": "Search for code in a team's repositories",
+   "path_params": [
+    "username"
+   ],
+   "query_params": [
+    {
+     "name": "search_query",
+     "type": "string",
+     "required": true,
+     "description": "The search query"
+    },
+    {
+     "name": "page",
+     "type": "integer",
+     "required": false,
+     "description": "Which page of the search results to retrieve"
+    },
+    {
+     "name": "pagelen",
+     "type": "integer",
+     "required": false,
+     "description": "How many search results to retrieve per page"
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-search/#api-teams-username-search-code-get"
+  },
+  {
+   "id": "searchAccount",
+   "method": "GET",
+   "path": "/users/{selected_user}/search/code",
+   "tag": "Search",
+   "summary": "Search for code in a user's repositories",
+   "path_params": [
+    "selected_user"
+   ],
+   "query_params": [
+    {
+     "name": "search_query",
+     "type": "string",
+     "required": true,
+     "description": "The search query"
+    },
+    {
+     "name": "page",
+     "type": "integer",
+     "required": false,
+     "description": "Which page of the search results to retrieve"
+    },
+    {
+     "name": "pagelen",
+     "type": "integer",
+     "required": false,
+     "description": "How many search results to retrieve per page"
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-search/#api-users-selected-user-search-code-get"
+  },
+  {
+   "id": "searchWorkspace",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/search/code",
+   "tag": "Search",
+   "summary": "Search for code in a workspace",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "search_query",
+     "type": "string",
+     "required": true,
+     "description": "The search query"
+    },
+    {
+     "name": "page",
+     "type": "integer",
+     "required": false,
+     "description": "Which page of the search results to retrieve"
+    },
+    {
+     "name": "pagelen",
+     "type": "integer",
+     "required": false,
+     "description": "How many search results to retrieve per page"
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-search/#api-workspaces-workspace-search-code-get"
+  },
+  {
+   "id": "createASnippet",
+   "method": "POST",
+   "path": "/snippets",
+   "tag": "Snippets",
+   "summary": "Create a snippet",
+   "path_params": [],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-post"
+  },
+  {
+   "id": "listSnippetsInAWorkspace",
+   "method": "GET",
+   "path": "/snippets/{workspace}",
+   "tag": "Snippets",
+   "summary": "List snippets in a workspace",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "role",
+     "type": "string",
+     "required": false,
+     "description": "Filter down the result based on the authenticated user's role (`owner`, `contributor`, or `member`)."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-get"
+  },
+  {
+   "id": "createASnippetForAWorkspace",
+   "method": "POST",
+   "path": "/snippets/{workspace}",
+   "tag": "Snippets",
+   "summary": "Create a snippet for a workspace",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-post"
+  },
+  {
+   "id": "deleteASnippet",
+   "method": "DELETE",
+   "path": "/snippets/{workspace}/{encoded_id}",
+   "tag": "Snippets",
+   "summary": "Delete a snippet",
+   "path_params": [
+    "encoded_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-delete"
+  },
+  {
+   "id": "getASnippet",
+   "method": "GET",
+   "path": "/snippets/{workspace}/{encoded_id}",
+   "tag": "Snippets",
+   "summary": "Get a snippet",
+   "path_params": [
+    "encoded_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-get"
+  },
+  {
+   "id": "updateASnippet",
+   "method": "PUT",
+   "path": "/snippets/{workspace}/{encoded_id}",
+   "tag": "Snippets",
+   "summary": "Update a snippet",
+   "path_params": [
+    "encoded_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-put"
+  },
+  {
+   "id": "listCommentsOnASnippet",
+   "method": "GET",
+   "path": "/snippets/{workspace}/{encoded_id}/comments",
+   "tag": "Snippets",
+   "summary": "List comments on a snippet",
+   "path_params": [
+    "encoded_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-comments-get"
+  },
+  {
+   "id": "createACommentOnASnippet",
+   "method": "POST",
+   "path": "/snippets/{workspace}/{encoded_id}/comments",
+   "tag": "Snippets",
+   "summary": "Create a comment on a snippet",
+   "path_params": [
+    "encoded_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-comments-post"
+  },
+  {
+   "id": "deleteACommentOnASnippet",
+   "method": "DELETE",
+   "path": "/snippets/{workspace}/{encoded_id}/comments/{comment_id}",
+   "tag": "Snippets",
+   "summary": "Delete a comment on a snippet",
+   "path_params": [
+    "comment_id",
+    "encoded_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-comments-comment-id-delete"
+  },
+  {
+   "id": "getACommentOnASnippet",
+   "method": "GET",
+   "path": "/snippets/{workspace}/{encoded_id}/comments/{comment_id}",
+   "tag": "Snippets",
+   "summary": "Get a comment on a snippet",
+   "path_params": [
+    "comment_id",
+    "encoded_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-comments-comment-id-get"
+  },
+  {
+   "id": "updateACommentOnASnippet",
+   "method": "PUT",
+   "path": "/snippets/{workspace}/{encoded_id}/comments/{comment_id}",
+   "tag": "Snippets",
+   "summary": "Update a comment on a snippet",
+   "path_params": [
+    "comment_id",
+    "encoded_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-comments-comment-id-put"
+  },
+  {
+   "id": "listSnippetChanges",
+   "method": "GET",
+   "path": "/snippets/{workspace}/{encoded_id}/commits",
+   "tag": "Snippets",
+   "summary": "List snippet changes",
+   "path_params": [
+    "encoded_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-commits-get"
+  },
+  {
+   "id": "getAPreviousSnippetChange",
+   "method": "GET",
+   "path": "/snippets/{workspace}/{encoded_id}/commits/{revision}",
+   "tag": "Snippets",
+   "summary": "Get a previous snippet change",
+   "path_params": [
+    "encoded_id",
+    "revision",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-commits-revision-get"
+  },
+  {
+   "id": "getASnippetSRawFileAtHead",
+   "method": "GET",
+   "path": "/snippets/{workspace}/{encoded_id}/files/{path}",
+   "tag": "Snippets",
+   "summary": "Get a snippet's raw file at HEAD",
+   "path_params": [
+    "encoded_id",
+    "path",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-files-path-get"
+  },
+  {
+   "id": "stopWatchingASnippet",
+   "method": "DELETE",
+   "path": "/snippets/{workspace}/{encoded_id}/watch",
+   "tag": "Snippets",
+   "summary": "Stop watching a snippet",
+   "path_params": [
+    "encoded_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-watch-delete"
+  },
+  {
+   "id": "checkIfTheCurrentUserIsWatchingASnippet",
+   "method": "GET",
+   "path": "/snippets/{workspace}/{encoded_id}/watch",
+   "tag": "Snippets",
+   "summary": "Check if the current user is watching a snippet",
+   "path_params": [
+    "encoded_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-watch-get"
+  },
+  {
+   "id": "watchASnippet",
+   "method": "PUT",
+   "path": "/snippets/{workspace}/{encoded_id}/watch",
+   "tag": "Snippets",
+   "summary": "Watch a snippet",
+   "path_params": [
+    "encoded_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-watch-put"
+  },
+  {
+   "id": "listUsersWatchingASnippet",
+   "method": "GET",
+   "path": "/snippets/{workspace}/{encoded_id}/watchers",
+   "tag": "Snippets",
+   "summary": "List users watching a snippet",
+   "path_params": [
+    "encoded_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-watchers-get"
+  },
+  {
+   "id": "deleteAPreviousRevisionOfASnippet",
+   "method": "DELETE",
+   "path": "/snippets/{workspace}/{encoded_id}/{node_id}",
+   "tag": "Snippets",
+   "summary": "Delete a previous revision of a snippet",
+   "path_params": [
+    "encoded_id",
+    "node_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-node-id-delete"
+  },
+  {
+   "id": "getAPreviousRevisionOfASnippet",
+   "method": "GET",
+   "path": "/snippets/{workspace}/{encoded_id}/{node_id}",
+   "tag": "Snippets",
+   "summary": "Get a previous revision of a snippet",
+   "path_params": [
+    "encoded_id",
+    "node_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-node-id-get"
+  },
+  {
+   "id": "updateAPreviousRevisionOfASnippet",
+   "method": "PUT",
+   "path": "/snippets/{workspace}/{encoded_id}/{node_id}",
+   "tag": "Snippets",
+   "summary": "Update a previous revision of a snippet",
+   "path_params": [
+    "encoded_id",
+    "node_id",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-node-id-put"
+  },
+  {
+   "id": "getASnippetSRawFile",
+   "method": "GET",
+   "path": "/snippets/{workspace}/{encoded_id}/{node_id}/files/{path}",
+   "tag": "Snippets",
+   "summary": "Get a snippet's raw file",
+   "path_params": [
+    "encoded_id",
+    "node_id",
+    "path",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-node-id-files-path-get"
+  },
+  {
+   "id": "getSnippetChangesBetweenVersions",
+   "method": "GET",
+   "path": "/snippets/{workspace}/{encoded_id}/{revision}/diff",
+   "tag": "Snippets",
+   "summary": "Get snippet changes between versions",
+   "path_params": [
+    "encoded_id",
+    "revision",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "path",
+     "type": "string",
+     "required": false,
+     "description": "When used, only one the diff of the specified file will be returned."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-revision-diff-get"
+  },
+  {
+   "id": "getSnippetPatchBetweenVersions",
+   "method": "GET",
+   "path": "/snippets/{workspace}/{encoded_id}/{revision}/patch",
+   "tag": "Snippets",
+   "summary": "Get snippet patch between versions",
+   "path_params": [
+    "encoded_id",
+    "revision",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-encoded-id-revision-patch-get"
+  },
+  {
+   "id": "listCommitsThatModifiedAFile",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/filehistory/{commit}/{path}",
+   "tag": "Source",
+   "summary": "List commits that modified a file",
+   "path_params": [
+    "commit",
+    "path",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "renames",
+     "type": "string",
+     "required": false,
+     "description": "When `true`, Bitbucket will follow the history of the file across renames (this is the default behavior). This can be turned off by specifying `false`."
+    },
+    {
+     "name": "q",
+     "type": "string",
+     "required": false,
+     "description": "Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering)."
+    },
+    {
+     "name": "sort",
+     "type": "string",
+     "required": false,
+     "description": "Name of a response property sort the result by as per [filtering and sorting](/cloud/bitbucket/rest/intro/#sorting-query-results)."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-source/#api-repositories-workspace-repo-slug-filehistory-commit-path-get"
+  },
+  {
+   "id": "getTheRootDirectoryOfTheMainBranch",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/src",
+   "tag": "Source",
+   "summary": "Get the root directory of the main branch",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "format",
+     "type": "string",
+     "required": false,
+     "description": "Instead of returning the file's contents, return the (json) meta data for it."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-source/#api-repositories-workspace-repo-slug-src-get"
+  },
+  {
+   "id": "createACommitByUploadingAFile",
+   "method": "POST",
+   "path": "/repositories/{workspace}/{repo_slug}/src",
+   "tag": "Source",
+   "summary": "Create a commit by uploading a file",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "message",
+     "type": "string",
+     "required": false,
+     "description": "The commit message. When omitted, Bitbucket uses a canned string."
+    },
+    {
+     "name": "author",
+     "type": "string",
+     "required": false,
+     "description": "The raw string to be used as the new commit's author. This string follows the format `Erik van Zijst <evzijst@atlassian.com>`. When omitted, Bitbucket uses the authenticated user's full/display name and primary email address. Commits canno\u2026"
+    },
+    {
+     "name": "parents",
+     "type": "string",
+     "required": false,
+     "description": "#### Deprecation Notice: Support for specifying multiple parent commits is deprecated and will be removed in a future release. Only a single SHA1 is accepted. A SHA1 of the commit that should be the parent of the newly created commit. When\u2026"
+    },
+    {
+     "name": "files",
+     "type": "string",
+     "required": false,
+     "description": "Optional field that declares the files that the request is manipulating. When adding a new file to a repo, or when overwriting an existing file, the client can just upload the full contents of the file in a normal form field and the use of\u2026"
+    },
+    {
+     "name": "branch",
+     "type": "string",
+     "required": false,
+     "description": "The name of the branch that the new commit should be created on. When omitted, the commit will be created on top of the main branch and will become the main branch's new head. When a branch name is provided that already exists in the repo,\u2026"
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-source/#api-repositories-workspace-repo-slug-src-post"
+  },
+  {
+   "id": "getFileOrDirectoryContents",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/src/{commit}/{path}",
+   "tag": "Source",
+   "summary": "Get file or directory contents",
+   "path_params": [
+    "commit",
+    "path",
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "format",
+     "type": "string",
+     "required": false,
+     "description": "If 'meta' is provided, returns the (json) meta data for the contents of the file. If 'rendered' is provided, returns the contents of a non-binary file in HTML-formatted rendered markup. The 'rendered' option only supports these filetypes:\u2026"
+    },
+    {
+     "name": "q",
+     "type": "string",
+     "required": false,
+     "description": "Optional filter expression as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering)."
+    },
+    {
+     "name": "sort",
+     "type": "string",
+     "required": false,
+     "description": "Optional sorting parameter as per [filtering and sorting](/cloud/bitbucket/rest/intro/#sorting-query-results)."
+    },
+    {
+     "name": "max_depth",
+     "type": "integer",
+     "required": false,
+     "description": "If provided, returns the contents of the repository and its subdirectories recursively until the specified max_depth of nested directories. When omitted, this defaults to 1."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-source/#api-repositories-workspace-repo-slug-src-commit-path-get"
+  },
+  {
+   "id": "getCurrentUser",
+   "method": "GET",
+   "path": "/user",
+   "tag": "Users",
+   "summary": "Get current user",
+   "path_params": [],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-users/#api-user-get"
+  },
+  {
+   "id": "listEmailAddressesForCurrentUser",
+   "method": "GET",
+   "path": "/user/emails",
+   "tag": "Users",
+   "summary": "List email addresses for current user",
+   "path_params": [],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-users/#api-user-emails-get"
+  },
+  {
+   "id": "getAnEmailAddressForCurrentUser",
+   "method": "GET",
+   "path": "/user/emails/{email}",
+   "tag": "Users",
+   "summary": "Get an email address for current user",
+   "path_params": [
+    "email"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-users/#api-user-emails-email-get"
+  },
+  {
+   "id": "getAUser",
+   "method": "GET",
+   "path": "/users/{selected_user}",
+   "tag": "Users",
+   "summary": "Get a user",
+   "path_params": [
+    "selected_user"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-users/#api-users-selected-user-get"
+  },
+  {
+   "id": "getAWebhookResource",
+   "method": "GET",
+   "path": "/hook_events",
+   "tag": "Webhooks",
+   "summary": "Get a webhook resource",
+   "path_params": [],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-webhooks/#api-hook-events-get"
+  },
+  {
+   "id": "listSubscribableWebhookTypes",
+   "method": "GET",
+   "path": "/hook_events/{subject_type}",
+   "tag": "Webhooks",
+   "summary": "List subscribable webhook types",
+   "path_params": [
+    "subject_type"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-webhooks/#api-hook-events-subject-type-get"
+  },
+  {
+   "id": "listWorkspacesForTheCurrentUser",
+   "method": "GET",
+   "path": "/user/workspaces",
+   "tag": "Workspaces",
+   "summary": "List workspaces for the current user",
+   "path_params": [],
+   "query_params": [
+    {
+     "name": "sort",
+     "type": "string",
+     "required": false,
+     "description": "Name of a response property to sort results (only slug is supported)."
+    },
+    {
+     "name": "administrator",
+     "type": "boolean",
+     "required": false,
+     "description": "Filter workspaces based on which ones the caller has admin permissions or not."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-workspaces/#api-user-workspaces-get"
+  },
+  {
+   "id": "getUserPermissionOnAWorkspace",
+   "method": "GET",
+   "path": "/user/workspaces/{workspace}/permission",
+   "tag": "Workspaces",
+   "summary": "Get user permission on a workspace",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-workspaces/#api-user-workspaces-workspace-permission-get"
+  },
+  {
+   "id": "getAWorkspace",
+   "method": "GET",
+   "path": "/workspaces/{workspace}",
+   "tag": "Workspaces",
+   "summary": "Get a workspace",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-workspaces/#api-workspaces-workspace-get"
+  },
+  {
+   "id": "listWebhooksForAWorkspace",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/hooks",
+   "tag": "Workspaces",
+   "summary": "List webhooks for a workspace",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-workspaces/#api-workspaces-workspace-hooks-get"
+  },
+  {
+   "id": "createAWebhookForAWorkspace",
+   "method": "POST",
+   "path": "/workspaces/{workspace}/hooks",
+   "tag": "Workspaces",
+   "summary": "Create a webhook for a workspace",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-workspaces/#api-workspaces-workspace-hooks-post"
+  },
+  {
+   "id": "deleteAWebhookForAWorkspace",
+   "method": "DELETE",
+   "path": "/workspaces/{workspace}/hooks/{uid}",
+   "tag": "Workspaces",
+   "summary": "Delete a webhook for a workspace",
+   "path_params": [
+    "uid",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-workspaces/#api-workspaces-workspace-hooks-uid-delete"
+  },
+  {
+   "id": "getAWebhookForAWorkspace",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/hooks/{uid}",
+   "tag": "Workspaces",
+   "summary": "Get a webhook for a workspace",
+   "path_params": [
+    "uid",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-workspaces/#api-workspaces-workspace-hooks-uid-get"
+  },
+  {
+   "id": "updateAWebhookForAWorkspace",
+   "method": "PUT",
+   "path": "/workspaces/{workspace}/hooks/{uid}",
+   "tag": "Workspaces",
+   "summary": "Update a webhook for a workspace",
+   "path_params": [
+    "uid",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-workspaces/#api-workspaces-workspace-hooks-uid-put"
+  },
+  {
+   "id": "listUsersInAWorkspace",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/members",
+   "tag": "Workspaces",
+   "summary": "List users in a workspace",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-workspaces/#api-workspaces-workspace-members-get"
+  },
+  {
+   "id": "getUserMembershipForAWorkspace",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/members/{member}",
+   "tag": "Workspaces",
+   "summary": "Get user membership for a workspace",
+   "path_params": [
+    "member",
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-workspaces/#api-workspaces-workspace-members-member-get"
+  },
+  {
+   "id": "listUserPermissionsInAWorkspace",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/permissions",
+   "tag": "Workspaces",
+   "summary": "List user permissions in a workspace",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "q",
+     "type": "string",
+     "required": false,
+     "description": "Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering)."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-workspaces/#api-workspaces-workspace-permissions-get"
+  },
+  {
+   "id": "listAllRepositoryPermissionsForAWorkspace",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/permissions/repositories",
+   "tag": "Workspaces",
+   "summary": "List all repository permissions for a workspace",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "q",
+     "type": "string",
+     "required": false,
+     "description": "Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering)."
+    },
+    {
+     "name": "sort",
+     "type": "string",
+     "required": false,
+     "description": "Name of a response property sort the result by as per [filtering and sorting](/cloud/bitbucket/rest/intro/#sorting-query-results)."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-workspaces/#api-workspaces-workspace-permissions-repositories-get"
+  },
+  {
+   "id": "listARepositoryPermissionsForAWorkspace",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/permissions/repositories/{repo_slug}",
+   "tag": "Workspaces",
+   "summary": "List a repository permissions for a workspace",
+   "path_params": [
+    "repo_slug",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "q",
+     "type": "string",
+     "required": false,
+     "description": "Query string to narrow down the response as per [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering)."
+    },
+    {
+     "name": "sort",
+     "type": "string",
+     "required": false,
+     "description": "Name of a response property sort the result by as per [filtering and sorting](/cloud/bitbucket/rest/intro/#sorting-query-results)."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-workspaces/#api-workspaces-workspace-permissions-repositories-repo-slug-get"
+  },
+  {
+   "id": "listProjectsInAWorkspace",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/projects",
+   "tag": "Workspaces",
+   "summary": "List projects in a workspace",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-workspaces/#api-workspaces-workspace-projects-get"
+  },
+  {
+   "id": "listWorkspacePullRequestsForAUser",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/pullrequests/{selected_user}",
+   "tag": "Workspaces",
+   "summary": "List workspace pull requests for a user",
+   "path_params": [
+    "selected_user",
+    "workspace"
+   ],
+   "query_params": [
+    {
+     "name": "state",
+     "type": "string",
+     "required": false,
+     "description": "Only return pull requests that are in this state. This parameter can be repeated."
+    }
+   ],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-workspaces/#api-workspaces-workspace-pullrequests-selected-user-get"
+  },
+  {
+   "id": "getTheWorkspaceSystemGpgPublicKeyS",
+   "method": "GET",
+   "path": "/workspaces/{workspace}/settings/gpg/public-key",
+   "tag": "Workspaces",
+   "summary": "Get the workspace system GPG public key(s)",
+   "path_params": [
+    "workspace"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-workspaces/#api-workspaces-workspace-settings-gpg-public-key-get"
+  },
+  {
+   "id": "deleteCommitHostedPropertyValue",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/properties/{app_key}/{property_name}",
+   "tag": "properties",
+   "summary": "Delete a commit application property",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "commit",
+    "app_key",
+    "property_name"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-properties/#api-repositories-workspace-repo-slug-commit-commit-properties-app-key-property-name-delete"
+  },
+  {
+   "id": "getCommitHostedPropertyValue",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/properties/{app_key}/{property_name}",
+   "tag": "properties",
+   "summary": "Get a commit application property",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "commit",
+    "app_key",
+    "property_name"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-properties/#api-repositories-workspace-repo-slug-commit-commit-properties-app-key-property-name-get"
+  },
+  {
+   "id": "updateCommitHostedPropertyValue",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/commit/{commit}/properties/{app_key}/{property_name}",
+   "tag": "properties",
+   "summary": "Update a commit application property",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "commit",
+    "app_key",
+    "property_name"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-properties/#api-repositories-workspace-repo-slug-commit-commit-properties-app-key-property-name-put"
+  },
+  {
+   "id": "deleteRepositoryHostedPropertyValue",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/properties/{app_key}/{property_name}",
+   "tag": "properties",
+   "summary": "Delete a repository application property",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "app_key",
+    "property_name"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-properties/#api-repositories-workspace-repo-slug-properties-app-key-property-name-delete"
+  },
+  {
+   "id": "getRepositoryHostedPropertyValue",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/properties/{app_key}/{property_name}",
+   "tag": "properties",
+   "summary": "Get a repository application property",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "app_key",
+    "property_name"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-properties/#api-repositories-workspace-repo-slug-properties-app-key-property-name-get"
+  },
+  {
+   "id": "updateRepositoryHostedPropertyValue",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/properties/{app_key}/{property_name}",
+   "tag": "properties",
+   "summary": "Update a repository application property",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "app_key",
+    "property_name"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-properties/#api-repositories-workspace-repo-slug-properties-app-key-property-name-put"
+  },
+  {
+   "id": "deletePullRequestHostedPropertyValue",
+   "method": "DELETE",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pullrequest_id}/properties/{app_key}/{property_name}",
+   "tag": "properties",
+   "summary": "Delete a pull request application property",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "pullrequest_id",
+    "app_key",
+    "property_name"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-properties/#api-repositories-workspace-repo-slug-pullrequests-pullrequest-id-properties-app-key-property-name-delete"
+  },
+  {
+   "id": "getPullRequestHostedPropertyValue",
+   "method": "GET",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pullrequest_id}/properties/{app_key}/{property_name}",
+   "tag": "properties",
+   "summary": "Get a pull request application property",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "pullrequest_id",
+    "app_key",
+    "property_name"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-properties/#api-repositories-workspace-repo-slug-pullrequests-pullrequest-id-properties-app-key-property-name-get"
+  },
+  {
+   "id": "updatePullRequestHostedPropertyValue",
+   "method": "PUT",
+   "path": "/repositories/{workspace}/{repo_slug}/pullrequests/{pullrequest_id}/properties/{app_key}/{property_name}",
+   "tag": "properties",
+   "summary": "Update a pull request application property",
+   "path_params": [
+    "workspace",
+    "repo_slug",
+    "pullrequest_id",
+    "app_key",
+    "property_name"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-properties/#api-repositories-workspace-repo-slug-pullrequests-pullrequest-id-properties-app-key-property-name-put"
+  },
+  {
+   "id": "deleteUserHostedPropertyValue",
+   "method": "DELETE",
+   "path": "/users/{selected_user}/properties/{app_key}/{property_name}",
+   "tag": "properties",
+   "summary": "Delete a user application property",
+   "path_params": [
+    "selected_user",
+    "app_key",
+    "property_name"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-properties/#api-users-selected-user-properties-app-key-property-name-delete"
+  },
+  {
+   "id": "retrieveUserHostedPropertyValue",
+   "method": "GET",
+   "path": "/users/{selected_user}/properties/{app_key}/{property_name}",
+   "tag": "properties",
+   "summary": "Get a user application property",
+   "path_params": [
+    "selected_user",
+    "app_key",
+    "property_name"
+   ],
+   "query_params": [],
+   "body": false,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-properties/#api-users-selected-user-properties-app-key-property-name-get"
+  },
+  {
+   "id": "updateUserHostedPropertyValue",
+   "method": "PUT",
+   "path": "/users/{selected_user}/properties/{app_key}/{property_name}",
+   "tag": "properties",
+   "summary": "Update a user application property",
+   "path_params": [
+    "selected_user",
+    "app_key",
+    "property_name"
+   ],
+   "query_params": [],
+   "body": true,
+   "doc_url": "https://developer.atlassian.com/cloud/bitbucket/rest/api-group-properties/#api-users-selected-user-properties-app-key-property-name-put"
+  }
+ ]
+}

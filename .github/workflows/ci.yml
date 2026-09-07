@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync --all-groups
+
+      - name: Lint
+        run: uv run ruff check .
+
+      - name: Check formatting
+        run: uv run ruff format --check .
+
+      # Only the offline suites. test_bb_integration.py hits the real Bitbucket
+      # API and creates real repositories; it skips itself without credentials
+      # and BITBUCKET_TEST_WORKSPACE, and must never be given them here.
+      - name: Test
+        run: |
+          uv run python -m unittest \
+            tests.test_bb_api \
+            tests.test_auth_modes \
+            tests.test_stdio_handshake \
+            --verbose
+
+      - name: Build
+        run: uv build
+
+      - name: Verify the wheel ships the endpoint index
+        run: |
+          uv run python - <<'PY'
+          import glob, zipfile
+          wheel = glob.glob("dist/*.whl")[0]
+          names = zipfile.ZipFile(wheel).namelist()
+          assert "mcp_bitbucket/endpoints.json" in names, names
+          print(f"ok: {wheel} contains the endpoint index")
+          PY
