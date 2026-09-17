@@ -6,14 +6,7 @@ from pydantic import Field
 
 from .. import annotations, config
 from ..http_client import JSON_HEADERS, api_url, request, require_ok
-
-Workspace = Annotated[str, Field(description="Bitbucket workspace")]
-RepoSlug = Annotated[
-    str,
-    Field(
-        description="Repository slug/name; defaults to the repo detected from the current directory's git remote"
-    ),
-]
+from .params import RepoSlug, Workspace
 
 
 def register(server) -> None:

@@ -8,15 +8,7 @@ from pydantic import Field
 from .. import annotations, config
 from ..diffs import extract_file_diff, parse_diff_by_file
 from ..http_client import JSON_HEADERS, api_url, format_error, request, require_ok
-
-Workspace = Annotated[str, Field(description="Bitbucket workspace")]
-RepoSlug = Annotated[
-    str,
-    Field(
-        description="Repository slug/name; defaults to the repo detected from the current directory's git remote"
-    ),
-]
-PrId = Annotated[int, Field(description="Pull request ID")]
+from .params import PrId, RepoSlug, Workspace
 
 _STATUS_CHARS = {"modified": "M", "added": "A", "removed": "D", "removed_file": "D"}
 
@@ -92,6 +84,10 @@ def register(server) -> None:
         destination = pr.get("destination", {}).get("branch", {}).get("name")
         lines = [
             f"Pull Request #{pr_id}: {pr.get('title')}",
+            # Name the repo explicitly: when repo_slug was left to the startup
+            # default, this is the only cheap way a caller notices it resolved to
+            # a different repository than the one they meant.
+            f"Repo: {workspace}/{repo_slug}",
             f"State: {pr.get('state')}",
             f"Author: {pr.get('author', {}).get('display_name', 'Unknown')}",
             f"Source: {source} → {destination}",

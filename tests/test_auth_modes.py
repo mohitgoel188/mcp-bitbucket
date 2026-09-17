@@ -257,6 +257,47 @@ if __name__ == "__main__":
     unittest.main()
 
 
+class RepoSlugDescriptionTest(unittest.TestCase):
+    """`repo_slug`'s description must say the default is fixed at startup.
+
+    `config.detect_repo()` runs once at import, so the default is the repo the
+    server process was launched in and never follows the caller. A description
+    that says "detected from the current directory" reads as per-call, and a
+    cross-repo call then resolves silently to the wrong repository - which has
+    happened. These assertions are about wording because the wording is the only
+    thing that reaches the model.
+    """
+
+    TOOL_MODULES = ("issues", "pr_review", "pullrequests", "repositories", "source")
+
+    def _description(self) -> str:
+        _reload(TOKEN_ENV)
+        params = importlib.import_module("mcp_bitbucket.tools.params")
+        return params.RepoSlug.__metadata__[0].description
+
+    def test_description_states_the_default_is_startup_scoped(self) -> None:
+        description = self._description()
+        self.assertIn("STARTED", description)
+        self.assertIn("not per", description)
+
+    def test_description_tells_the_caller_when_to_pass_it(self) -> None:
+        self.assertIn("explicitly", self._description())
+
+    def test_no_tool_module_redefines_repo_slug(self) -> None:
+        """One definition only - five copies of this wording drifted before."""
+        tools_dir = (
+            Path(__file__).resolve().parent.parent / "src" / "mcp_bitbucket" / "tools"
+        )
+        for name in self.TOOL_MODULES:
+            source = (tools_dir / f"{name}.py").read_text()
+            self.assertNotIn(
+                "RepoSlug = Annotated",
+                source,
+                f"{name}.py redefines RepoSlug; import it from .params instead",
+            )
+            self.assertIn("from .params import", source)
+
+
 class RepoDetectionTest(unittest.TestCase):
     """Workspace/slug detection from the working directory's git remote.
 
