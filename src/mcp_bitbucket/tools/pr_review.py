@@ -12,15 +12,7 @@ from pydantic import Field
 
 from .. import annotations, config
 from ..http_client import JSON_HEADERS, api_url, paginate, request, require_ok
-
-Workspace = Annotated[str, Field(description="Bitbucket workspace")]
-RepoSlug = Annotated[
-    str,
-    Field(
-        description="Repository slug/name; defaults to the repo detected from the current directory's git remote"
-    ),
-]
-PrId = Annotated[int, Field(description="Pull request ID")]
+from .params import PrId, RepoSlug, Workspace
 
 # Only the fields a reviewer actually reads -- the full payload is ~2 KB per PR
 # of links and rendered markup.
